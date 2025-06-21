@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\LiveSessions;
 use App\Models\Enrollment;
+use App\Http\Resources\LiveSessionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
@@ -28,9 +29,22 @@ class LiveSessionsController extends Controller
             });
         }
 
+        // Filter by teacher (for teacher dashboard)
+        if ($request->filled('teacher_id')) {
+            $query->where('teacher_id', $request->teacher_id);
+        }
+
         $sessions = $query->paginate(10);
 
-        return response()->json($sessions);
+        return response()->json([
+            'data' => LiveSessionResource::collection($sessions->items()),
+            'meta' => [
+                'current_page' => $sessions->currentPage(),
+                'last_page' => $sessions->lastPage(),
+                'per_page' => $sessions->perPage(),
+                'total' => $sessions->total(),
+            ]
+        ]);
     }
 
     public function show(string $id): JsonResponse
@@ -38,17 +52,90 @@ class LiveSessionsController extends Controller
         $session = LiveSessions::with(['program.language', 'teacher'])
                               ->findOrFail($id);
 
-        // Check if current user is enrolled in the program
-        $isEnrolled = false;
-        if (auth()->check() && auth()->user()->is_student) {
-            $isEnrolled = Enrollment::where('student_id', auth()->id())
-                                   ->where('program_id', $session->program_id)
-                                   ->exists();
+        return response()->json([
+            'data' => new LiveSessionResource($session)
+        ]);
+    }
+
+    public function store(Request $request): JsonResponse
+    {
+        $user = $request->user();
+        
+        if (!$user->is_teacher) {
+            return response()->json(['message' => 'Only teachers can create sessions'], 403);
         }
 
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'sometimes|string',
+            'program_id' => 'required|exists:programs,id',
+            'scheduled_at' => 'required|date|after:now',
+            'duration_minutes' => 'required|integer|min:15|max:480',
+            'meeting_url' => 'sometimes|url',
+            'meeting_id' => 'sometimes|string',
+            'meeting_password' => 'sometimes|string',
+            'max_participants' => 'required|integer|min:1|max:500',
+        ]);
+
+        // Verify teacher owns the program
+        $program = \App\Models\Programs::findOrFail($request->program_id);
+        if ($program->teacher_id !== $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $session = LiveSessions::create([
+            ...$request->validated(),
+            'teacher_id' => $user->id,
+        ]);
+
         return response()->json([
-            'session' => $session,
-            'is_enrolled' => $isEnrolled,
+            'message' => 'Live session created successfully',
+            'data' => new LiveSessionResource($session->load(['program', 'teacher']))
+        ], 201);
+    }
+
+    public function update(Request $request, LiveSessions $session): JsonResponse
+    {
+        $user = $request->user();
+        
+        // Check authorization
+        if ($user->is_teacher && $session->teacher_id !== $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $request->validate([
+            'title' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+            'scheduled_at' => 'sometimes|date',
+            'duration_minutes' => 'sometimes|integer|min:15|max:480',
+            'meeting_url' => 'sometimes|url',
+            'meeting_id' => 'sometimes|string',
+            'meeting_password' => 'sometimes|string',
+            'max_participants' => 'sometimes|integer|min:1|max:500',
+            'status' => 'sometimes|in:scheduled,live,completed,cancelled',
+        ]);
+
+        $session->update($request->validated());
+
+        return response()->json([
+            'message' => 'Live session updated successfully',
+            'data' => new LiveSessionResource($session->fresh()->load(['program', 'teacher']))
+        ]);
+    }
+
+    public function destroy(LiveSessions $session): JsonResponse
+    {
+        $user = auth()->user();
+        
+        // Check authorization
+        if ($user->is_teacher && $session->teacher_id !== $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $session->delete();
+
+        return response()->json([
+            'message' => 'Live session deleted successfully'
         ]);
     }
 
@@ -70,7 +157,7 @@ class LiveSessionsController extends Controller
             }
         }
 
-        // Check if session is live or upcoming
+        // Check if session is available for joining
         if (!in_array($session->status, ['scheduled', 'live'])) {
             return response()->json([
                 'message' => 'This session is not available for joining'
@@ -78,9 +165,12 @@ class LiveSessionsController extends Controller
         }
 
         return response()->json([
-            'meeting_url' => $session->meeting_url,
-            'meeting_id' => $session->meeting_id,
-            'meeting_password' => $session->meeting_password,
+            'data' => [
+                'meeting_url' => $session->meeting_url,
+                'meeting_id' => $session->meeting_id,
+                'meeting_password' => $session->meeting_password,
+                'session' => new LiveSessionResource($session),
+            ]
         ]);
     }
 }
