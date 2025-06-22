@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
@@ -17,8 +18,11 @@ import { RegisterPage } from './components/auth/RegisterPage';
 import { StudentDashboard } from './components/dashboard/student/StudentDashboard';
 import { TeacherDashboard } from './components/dashboard/teacher/TeacherDashboard';
 import { AdminDashboard } from './components/dashboard/admin/AdminDashboard';
+import { AboutPage } from './pages/AboutPage';
+import { ContactPage } from './pages/ContactPage';
+import { queryClient } from './lib/react-query';
 
-type ViewType = 'home' | 'payment' | 'login' | 'register' | 'dashboard';
+type ViewType = 'home' | 'about' | 'contact' | 'payment' | 'login' | 'register' | 'dashboard';
 
 const AppContent: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -54,6 +58,30 @@ const AppContent: React.FC = () => {
     );
   }
 
+  // Show about page
+  if (currentView === 'about') {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <Navbar />
+        <AboutPage />
+        <Footer />
+        <WhatsAppButton fixed />
+      </div>
+    );
+  }
+
+  // Show contact page
+  if (currentView === 'contact') {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <Navbar />
+        <ContactPage />
+        <Footer />
+        <WhatsAppButton fixed />
+      </div>
+    );
+  }
+
   // Show payment page
   if (currentView === 'payment') {
     return (
@@ -79,10 +107,22 @@ const AppContent: React.FC = () => {
       <Footer />
       <WhatsAppButton fixed />
       
-      {/* Demo Login Panel */}
+      {/* Demo Navigation Panel */}
       <div className="fixed bottom-4 left-4 z-50 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-        <h3 className="text-sm font-semibold mb-2 text-gray-900 dark:text-white">Quick Access</h3>
+        <h3 className="text-sm font-semibold mb-2 text-gray-900 dark:text-white">Quick Navigation</h3>
         <div className="space-y-2">
+          <button
+            onClick={() => setCurrentView('about')}
+            className="block w-full text-left px-3 py-1 text-xs bg-purple-100 hover:bg-purple-200 dark:bg-purple-900/20 dark:hover:bg-purple-900/40 text-purple-800 dark:text-purple-300 rounded"
+          >
+            About Page
+          </button>
+          <button
+            onClick={() => setCurrentView('contact')}
+            className="block w-full text-left px-3 py-1 text-xs bg-orange-100 hover:bg-orange-200 dark:bg-orange-900/20 dark:hover:bg-orange-900/40 text-orange-800 dark:text-orange-300 rounded"
+          >
+            Contact Page
+          </button>
           <button
             onClick={() => setCurrentView('login')}
             className="block w-full text-left px-3 py-1 text-xs bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/20 dark:hover:bg-blue-900/40 text-blue-800 dark:text-blue-300 rounded"
@@ -97,7 +137,7 @@ const AppContent: React.FC = () => {
           </button>
           <button
             onClick={() => setCurrentView('payment')}
-            className="block w-full text-left px-3 py-1 text-xs bg-purple-100 hover:bg-purple-200 dark:bg-purple-900/20 dark:hover:bg-purple-900/40 text-purple-800 dark:text-purple-300 rounded"
+            className="block w-full text-left px-3 py-1 text-xs bg-yellow-100 hover:bg-yellow-200 dark:bg-yellow-900/20 dark:hover:bg-yellow-900/40 text-yellow-800 dark:text-yellow-300 rounded"
           >
             Payment Page
           </button>
@@ -109,13 +149,15 @@ const AppContent: React.FC = () => {
 
 function App() {
   return (
-    <ThemeProvider>
-      <LanguageProvider>
-        <AuthProvider>
-          <AppContent />
-        </AuthProvider>
-      </LanguageProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <AppContent />
+          </AuthProvider>
+        </LanguageProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 

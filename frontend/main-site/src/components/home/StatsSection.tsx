@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Users, BookOpen, Award, Globe } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useStats } from '../../hooks/useStats';
+import { LoadingSpinner } from '../ui/LoadingSpinner';
 
 interface StatItem {
   icon: React.ComponentType<any>;
@@ -11,16 +13,19 @@ interface StatItem {
 
 export const StatsSection: React.FC = () => {
   const { t } = useLanguage();
+  const { data: statsData, isLoading } = useStats();
   const [animatedValues, setAnimatedValues] = useState<number[]>([0, 0, 0, 0]);
 
   const stats: StatItem[] = [
-    { icon: Users, value: 2456, label: t('stats.students'), suffix: '+' },
-    { icon: BookOpen, value: 45, label: t('stats.courses') },
-    { icon: Award, value: 1890, label: t('stats.certificates'), suffix: '+' },
-    { icon: Globe, value: 12, label: t('stats.languages') },
+    { icon: Users, value: statsData?.total_students || 2456, label: t('stats.students'), suffix: '+' },
+    { icon: BookOpen, value: statsData?.active_programs || 45, label: t('stats.courses') },
+    { icon: Award, value: statsData?.certificates_issued || 1890, label: t('stats.certificates'), suffix: '+' },
+    { icon: Globe, value: statsData?.total_languages || 12, label: t('stats.languages') },
   ];
 
   useEffect(() => {
+    if (!statsData && !isLoading) return;
+
     const animateNumbers = () => {
       stats.forEach((stat, index) => {
         let current = 0;
@@ -54,7 +59,7 @@ export const StatsSection: React.FC = () => {
     if (element) observer.observe(element);
 
     return () => observer.disconnect();
-  }, []);
+  }, [statsData, isLoading]);
 
   return (
     <section id="stats-section" className="py-16 bg-primary-600 text-white">
@@ -68,21 +73,27 @@ export const StatsSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-          {stats.map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-white/10 rounded-full mb-4">
-                <stat.icon className="w-8 h-8" />
+        {isLoading ? (
+          <div className="flex justify-center">
+            <LoadingSpinner size="lg" className="border-white border-t-primary-300" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-white/10 rounded-full mb-4">
+                  <stat.icon className="w-8 h-8" />
+                </div>
+                <div className="text-4xl font-bold mb-2">
+                  {animatedValues[index].toLocaleString()}{stat.suffix}
+                </div>
+                <div className="text-primary-100 font-medium">
+                  {stat.label}
+                </div>
               </div>
-              <div className="text-4xl font-bold mb-2">
-                {animatedValues[index].toLocaleString()}{stat.suffix}
-              </div>
-              <div className="text-primary-100 font-medium">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
