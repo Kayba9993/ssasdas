@@ -1,87 +1,80 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { LanguageProvider } from './contexts/LanguageContext';
-import { ThemeProvider } from './contexts/ThemeContext';
-import { AuthProvider } from './contexts/AuthContext';
-import { Navbar } from './components/common/Navbar';
-import { Footer } from './components/common/Footer';
-import { WhatsAppButton } from './components/common/WhatsAppButton';
-import { HomePage } from './pages/HomePage';
-import { ProgramsPage } from './pages/ProgramsPage';
-import { AboutPage } from './pages/AboutPage';
-import { ContactPage } from './pages/ContactPage';
-import { PaymentOptions } from './components/payment/PaymentOptions';
-import { LoginPage } from './components/auth/LoginPage';
-import { RegisterPage } from './components/auth/RegisterPage';
-import { StudentDashboard } from './components/dashboard/student/StudentDashboard';
-import { TeacherDashboard } from './components/dashboard/teacher/TeacherDashboard';
-import { AdminDashboard } from './components/dashboard/admin/AdminDashboard';
-import { ProtectedRoute } from './components/common/ProtectedRoute';
-import { queryClient } from './lib/react-query';
 
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <LanguageProvider>
-          <AuthProvider>
-            <Router>
-              <div className="min-h-screen bg-white dark:bg-gray-900">
-                <Routes>
-                  {/* Auth Routes */}
-                  <Route path="/login" element={<LoginPage />} />
-                  <Route path="/register" element={<RegisterPage />} />
-                  
-                  {/* Dashboard Routes */}
-                  <Route 
-                    path="/dashboard/student" 
-                    element={
-                      <ProtectedRoute allowedRoles={['student']}>
-                        <StudentDashboard />
-                      </ProtectedRoute>
-                    } 
-                  />
-                  <Route 
-                    path="/dashboard/teacher" 
-                    element={
-                      <ProtectedRoute allowedRoles={['teacher']}>
-                        <TeacherDashboard />
-                      </ProtectedRoute>
-                    } 
-                  />
-                  <Route 
-                    path="/dashboard/admin" 
-                    element={
-                      <ProtectedRoute allowedRoles={['admin']}>
-                        <AdminDashboard />
-                      </ProtectedRoute>
-                    } 
-                  />
-                  
-                  {/* Public Routes with Layout */}
-                  <Route path="/*" element={
-                    <>
-                      <Navbar />
-                      <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/programs" element={<ProgramsPage />} />
-                        <Route path="/about" element={<AboutPage />} />
-                        <Route path="/contact" element={<ContactPage />} />
-                        <Route path="/payment" element={<PaymentOptions />} />
-                      </Routes>
-                      <Footer />
-                      <WhatsAppButton fixed />
-                    </>
-                  } />
-                </Routes>
-              </div>
-            </Router>
-          </AuthProvider>
-        </LanguageProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
-  );
-}
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LanguageProvider } from "./contexts/LanguageContext";
+import Index from "./pages/Index";
+import ProfessorsPage from "./pages/ProfessorsPage";
+import ProfessorDetailPage from "./pages/ProfessorDetailPage";
+import LanguagesPage from "./pages/LanguagesPage";
+import RegistrationPage from "./pages/RegistrationPage";
+import WhatsAppPage from "./pages/WhatsAppPage";
+import ContactPage from "./pages/ContactPage";
+import NotFound from "./pages/NotFound";
+import AdminLoginPage from "./pages/AdminLoginPage";
+
+// Admin pages
+import AdminDashboardPage from "./pages/AdminDashboardPage";
+import AdminDashboardOverview from "./components/admin/AdminDashboardOverview";
+import AdminProfessors from "./components/admin/AdminProfessors";
+import AdminLanguages from "./components/admin/AdminLanguages";
+import AdminUsers from "./components/admin/AdminUsers";
+import AdminCourses from "./components/admin/AdminCourses";
+import AdminSettings from "./components/admin/AdminSettings";
+import AddUserPage from "./pages/admin/AddUserPage";
+import AddCoursePage from "./pages/admin/AddCoursePage";
+import EditUserPage from "./pages/admin/EditUserPage";
+import EditCoursePage from "./pages/admin/EditCoursePage";
+import EditProfessorPage from "./pages/admin/EditProfessorPage";
+import EditLanguagePage from "./pages/admin/EditLanguagePage";
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <LanguageProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            {/* Main site routes */}
+            <Route path="/" element={<Index />} />
+            <Route path="/professors" element={<ProfessorsPage />} />
+            <Route path="/professors/:id" element={<ProfessorDetailPage />} />
+            <Route path="/languages" element={<LanguagesPage />} />
+            <Route path="/register" element={<RegistrationPage />} />
+            <Route path="/whatsapp" element={<WhatsAppPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            
+            {/* Admin login route */}
+            <Route path="/admin/login" element={<AdminLoginPage />} />
+            
+            {/* Admin routes */}
+            <Route path="/admin" element={<AdminDashboardPage />}>
+              <Route index element={<AdminDashboardOverview />} />
+              <Route path="professors" element={<AdminProfessors />} />
+              <Route path="languages" element={<AdminLanguages />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="courses" element={<AdminCourses />} />
+              <Route path="settings" element={<AdminSettings />} />
+              <Route path="add-user" element={<AddUserPage />} />
+              <Route path="add-course" element={<AddCoursePage />} />
+              <Route path="edit-user/:id" element={<EditUserPage />} />
+              <Route path="edit-course/:id" element={<EditCoursePage />} />
+              <Route path="edit-professor/:id" element={<EditProfessorPage />} />
+              <Route path="edit-language/:id" element={<EditLanguagePage />} />
+            </Route>
+            
+            {/* 404 route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </LanguageProvider>
+  </QueryClientProvider>
+);
 
 export default App;
