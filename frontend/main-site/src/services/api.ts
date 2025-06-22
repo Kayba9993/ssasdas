@@ -44,7 +44,7 @@ export const loginUser = async (credentials: { email: string; password: string }
 };
 
 export const adminLogin = async (credentials: { email: string; password: string }) => {
-  const response = await fetch(`${API_BASE_URL}/auth/admin-login`, {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: 'POST',
     headers: getAuthHeaders(),
     body: JSON.stringify(credentials)

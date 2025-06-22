@@ -32,6 +32,7 @@ const AdminLoginPage = () => {
     
     try {
       const response = await adminLogin({ email, password });
+      console.log(response)
       
       // Store authentication token
       localStorage.setItem("auth_token", response.data.token);
