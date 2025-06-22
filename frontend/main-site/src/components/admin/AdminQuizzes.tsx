@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { 
   Card, 
   CardContent, 
@@ -18,54 +17,58 @@ import { Button } from "@/components/ui/button";
 import { Plus, Pencil, Trash } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Form, FormField, FormItem, FormLabel, FormControl } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchLanguages, createLanguage, updateLanguage, deleteLanguage } from "@/services/api";
+import { fetchQuizzes, createQuiz, updateQuiz, deleteQuiz } from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 
-interface LanguageFormValues {
-  name: string;
+interface QuizFormValues {
+  title: string;
   description: string;
-  icon: string;
-  difficulty_level: string;
+  program_id: string;
+  time_limit_minutes: number;
+  passing_score: number;
+  max_attempts: number;
 }
 
-const AdminLanguages = () => {
-  const navigate = useNavigate();
+const AdminQuizzes = () => {
   const [isAddSheetOpen, setIsAddSheetOpen] = useState(false);
-  const [editingLanguage, setEditingLanguage] = useState<any>(null);
+  const [editingQuiz, setEditingQuiz] = useState<any>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
   
-  const { data: languages, isLoading } = useQuery({
-    queryKey: ['languages'],
-    queryFn: fetchLanguages
+  const { data: quizzes, isLoading } = useQuery({
+    queryKey: ['admin-quizzes'],
+    queryFn: fetchQuizzes
   });
 
-  const form = useForm<LanguageFormValues>({
+  const form = useForm<QuizFormValues>({
     defaultValues: {
-      name: "",
+      title: "",
       description: "",
-      icon: "",
-      difficulty_level: "beginner"
+      program_id: "",
+      time_limit_minutes: 60,
+      passing_score: 70,
+      max_attempts: 3
     }
   });
 
   const createMutation = useMutation({
-    mutationFn: createLanguage,
+    mutationFn: createQuiz,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['languages'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-quizzes'] });
       toast({
-        title: "تم إنشاء اللغة بنجاح",
-        description: "تم إضافة اللغة الجديدة إلى النظام"
+        title: "تم إنشاء الاختبار بنجاح",
+        description: "تم إضافة الاختبار الجديد إلى النظام"
       });
       setIsAddSheetOpen(false);
       form.reset();
     },
     onError: (error: any) => {
       toast({
-        title: "خطأ في إنشاء اللغة",
+        title: "خطأ في إنشاء الاختبار",
         description: error.message,
         variant: "destructive"
       });
@@ -73,19 +76,19 @@ const AdminLanguages = () => {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: any }) => updateLanguage(id, data),
+    mutationFn: ({ id, data }: { id: string; data: any }) => updateQuiz(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['languages'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-quizzes'] });
       toast({
-        title: "تم تحديث اللغة بنجاح",
+        title: "تم تحديث الاختبار بنجاح",
         description: "تم حفظ التغييرات"
       });
-      setEditingLanguage(null);
+      setEditingQuiz(null);
       form.reset();
     },
     onError: (error: any) => {
       toast({
-        title: "خطأ في تحديث اللغة",
+        title: "خطأ في تحديث الاختبار",
         description: error.message,
         variant: "destructive"
       });
@@ -93,44 +96,51 @@ const AdminLanguages = () => {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: deleteLanguage,
+    mutationFn: deleteQuiz,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['languages'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-quizzes'] });
       toast({
-        title: "تم حذف اللغة بنجاح",
-        description: "تم إزالة اللغة من النظام"
+        title: "تم حذف الاختبار بنجاح",
+        description: "تم إزالة الاختبار من النظام"
       });
     },
     onError: (error: any) => {
       toast({
-        title: "خطأ في حذف اللغة",
+        title: "خطأ في حذف الاختبار",
         description: error.message,
         variant: "destructive"
       });
     }
   });
   
-  const onSubmit = (data: LanguageFormValues) => {
-    if (editingLanguage) {
-      updateMutation.mutate({ id: editingLanguage.id, data });
+  const onSubmit = (data: QuizFormValues) => {
+    const quizData = {
+      ...data,
+      total_questions: 0, // Will be updated when questions are added
+    };
+
+    if (editingQuiz) {
+      updateMutation.mutate({ id: editingQuiz.id, data: quizData });
     } else {
-      createMutation.mutate(data);
+      createMutation.mutate(quizData);
     }
   };
 
-  const handleEdit = (language: any) => {
-    setEditingLanguage(language);
+  const handleEdit = (quiz: any) => {
+    setEditingQuiz(quiz);
     form.reset({
-      name: language.name,
-      description: language.description || "",
-      icon: language.icon || "",
-      difficulty_level: language.difficulty_level || "beginner"
+      title: quiz.title,
+      description: quiz.description || "",
+      program_id: quiz.program_id || "",
+      time_limit_minutes: quiz.time_limit_minutes || 60,
+      passing_score: quiz.passing_score || 70,
+      max_attempts: quiz.max_attempts || 3
     });
     setIsAddSheetOpen(true);
   };
 
   const handleDelete = (id: string) => {
-    if (confirm("هل أنت متأكد من حذف هذه اللغة؟")) {
+    if (confirm("هل أنت متأكد من حذف هذا الاختبار؟")) {
       deleteMutation.mutate(id);
     }
   };
@@ -142,24 +152,24 @@ const AdminLanguages = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">إدارة اللغات</h1>
+        <h1 className="text-3xl font-bold tracking-tight">إدارة الاختبارات</h1>
         <Sheet open={isAddSheetOpen} onOpenChange={(open) => {
           setIsAddSheetOpen(open);
           if (!open) {
-            setEditingLanguage(null);
+            setEditingQuiz(null);
             form.reset();
           }
         }}>
           <SheetTrigger asChild>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
-              إضافة لغة جديدة
+              إضافة اختبار جديد
             </Button>
           </SheetTrigger>
           <SheetContent className="w-[400px]">
             <SheetHeader>
               <SheetTitle className="text-right">
-                {editingLanguage ? "تعديل اللغة" : "إضافة لغة جديدة"}
+                {editingQuiz ? "تعديل الاختبار" : "إضافة اختبار جديد"}
               </SheetTitle>
             </SheetHeader>
             <div className="mt-6">
@@ -167,12 +177,12 @@ const AdminLanguages = () => {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                   <FormField
                     control={form.control}
-                    name="name"
+                    name="title"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>اسم اللغة بالعربية</FormLabel>
+                        <FormLabel>عنوان الاختبار</FormLabel>
                         <FormControl>
-                          <Input placeholder="مثال: الإنجليزية" {...field} />
+                          <Input placeholder="مثال: اختبار اللغة الإنجليزية" {...field} />
                         </FormControl>
                       </FormItem>
                     )}
@@ -183,9 +193,9 @@ const AdminLanguages = () => {
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>وصف اللغة</FormLabel>
+                        <FormLabel>وصف الاختبار</FormLabel>
                         <FormControl>
-                          <Input placeholder="وصف مختصر للغة" {...field} />
+                          <Textarea placeholder="وصف مختصر للاختبار" {...field} />
                         </FormControl>
                       </FormItem>
                     )}
@@ -193,12 +203,17 @@ const AdminLanguages = () => {
 
                   <FormField
                     control={form.control}
-                    name="icon"
+                    name="time_limit_minutes"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>رمز العلم</FormLabel>
+                        <FormLabel>مدة الاختبار (بالدقائق)</FormLabel>
                         <FormControl>
-                          <Input placeholder="مثال: 🇬🇧" {...field} />
+                          <Input 
+                            type="number" 
+                            placeholder="60" 
+                            {...field} 
+                            onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                          />
                         </FormControl>
                       </FormItem>
                     )}
@@ -206,16 +221,35 @@ const AdminLanguages = () => {
 
                   <FormField
                     control={form.control}
-                    name="difficulty_level"
+                    name="passing_score"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>مستوى الصعوبة</FormLabel>
+                        <FormLabel>درجة النجاح (%)</FormLabel>
                         <FormControl>
-                          <select {...field} className="w-full p-2 border rounded">
-                            <option value="beginner">مبتدئ</option>
-                            <option value="intermediate">متوسط</option>
-                            <option value="advanced">متقدم</option>
-                          </select>
+                          <Input 
+                            type="number" 
+                            placeholder="70" 
+                            {...field} 
+                            onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="max_attempts"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>عدد المحاولات المسموحة</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="number" 
+                            placeholder="3" 
+                            {...field} 
+                            onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                          />
                         </FormControl>
                       </FormItem>
                     )}
@@ -231,7 +265,7 @@ const AdminLanguages = () => {
                       إلغاء
                     </Button>
                     <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
-                      {editingLanguage ? "تحديث" : "حفظ"}
+                      {editingQuiz ? "تحديث" : "حفظ"}
                     </Button>
                   </div>
                 </form>
@@ -243,31 +277,39 @@ const AdminLanguages = () => {
       
       <Card>
         <CardHeader>
-          <CardTitle>قائمة اللغات</CardTitle>
+          <CardTitle>قائمة الاختبارات</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>العلم</TableHead>
-                <TableHead>اسم اللغة</TableHead>
-                <TableHead>الوصف</TableHead>
-                <TableHead>مستوى الصعوبة</TableHead>
+                <TableHead>عنوان الاختبار</TableHead>
+                <TableHead>عدد الأسئلة</TableHead>
+                <TableHead>مدة الاختبار</TableHead>
+                <TableHead>درجة النجاح</TableHead>
+                <TableHead>الحالة</TableHead>
                 <TableHead className="w-[100px]">الإجراءات</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {languages?.map((language: any) => (
-                <TableRow key={language.id}>
-                  <TableCell>{language.icon}</TableCell>
-                  <TableCell>{language.name}</TableCell>
-                  <TableCell>{language.description}</TableCell>
-                  <TableCell>{language.difficulty_level}</TableCell>
+              {quizzes?.data?.map((quiz: any) => (
+                <TableRow key={quiz.id}>
+                  <TableCell>{quiz.title}</TableCell>
+                  <TableCell>{quiz.total_questions}</TableCell>
+                  <TableCell>{quiz.time_limit_minutes} دقيقة</TableCell>
+                  <TableCell>{quiz.passing_score}%</TableCell>
+                  <TableCell>
+                    <span className={`px-2 py-1 rounded text-xs ${
+                      quiz.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                    }`}>
+                      {quiz.is_active ? 'نشط' : 'غير نشط'}
+                    </span>
+                  </TableCell>
                   <TableCell className="flex space-x-2">
                     <Button 
                       variant="ghost" 
                       size="icon"
-                      onClick={() => handleEdit(language)}
+                      onClick={() => handleEdit(quiz)}
                     >
                       <Pencil className="h-4 w-4" />
                       <span className="sr-only">تعديل</span>
@@ -275,7 +317,7 @@ const AdminLanguages = () => {
                     <Button 
                       variant="ghost" 
                       size="icon"
-                      onClick={() => handleDelete(language.id)}
+                      onClick={() => handleDelete(quiz.id)}
                       disabled={deleteMutation.isPending}
                     >
                       <Trash className="h-4 w-4" />
@@ -292,4 +334,4 @@ const AdminLanguages = () => {
   );
 };
 
-export default AdminLanguages;
+export default AdminQuizzes;

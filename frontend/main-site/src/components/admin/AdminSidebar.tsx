@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
@@ -7,7 +6,9 @@ import {
   Languages, 
   UserPlus, 
   Settings,
-  BookOpen
+  BookOpen,
+  ClipboardList,
+  UserCheck
 } from "lucide-react";
 
 const AdminSidebar = () => {
@@ -42,6 +43,16 @@ const AdminSidebar = () => {
       name: "الدورات", 
       path: "/admin/courses", 
       icon: BookOpen 
+    },
+    { 
+      name: "الاختبارات", 
+      path: "/admin/quizzes", 
+      icon: ClipboardList 
+    },
+    { 
+      name: "طلبات التسجيل", 
+      path: "/admin/student-approval", 
+      icon: UserCheck 
     },
     { 
       name: "الإعدادات", 

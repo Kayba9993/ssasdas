@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
         // Create admin user
         $admin = User::create([
             'name' => 'System Administrator',
-            'email' => 'admin@languageapp.com',
-            'password' => Hash::make('password'),
+            'email' => 'admin@example.com',
+            'password' => Hash::make('admin123'),
             'role' => 'admin',
         ]);
 
@@ -60,25 +60,44 @@ class DatabaseSeeder extends Seeder
         // Create languages
         $languages = [
             [
-                'name' => 'Spanish',
-                'slug' => 'spanish',
-                'description' => 'Learn Spanish from beginner to advanced level',
+                'name' => 'الإنجليزية',
+                'slug' => 'english',
+                'description' => 'Learn English from beginner to advanced level',
                 'difficulty_level' => 'intermediate',
-                'tags' => ['popular', 'romance-language'],
+                'tags' => ['popular', 'business'],
+                'icon' => '🇬🇧',
             ],
             [
-                'name' => 'French',
+                'name' => 'الفرنسية',
                 'slug' => 'french',
                 'description' => 'Master the French language with comprehensive courses',
                 'difficulty_level' => 'intermediate',
                 'tags' => ['popular', 'romance-language'],
+                'icon' => '🇫🇷',
             ],
             [
-                'name' => 'German',
+                'name' => 'الألمانية',
                 'slug' => 'german',
                 'description' => 'Learn German systematically with structured lessons',
                 'difficulty_level' => 'advanced',
                 'tags' => ['european', 'business'],
+                'icon' => '🇩🇪',
+            ],
+            [
+                'name' => 'الإسبانية',
+                'slug' => 'spanish',
+                'description' => 'Learn Spanish with native speakers',
+                'difficulty_level' => 'beginner',
+                'tags' => ['popular', 'romance-language'],
+                'icon' => '🇪🇸',
+            ],
+            [
+                'name' => 'الإيطالية',
+                'slug' => 'italian',
+                'description' => 'Discover the beauty of Italian language',
+                'difficulty_level' => 'intermediate',
+                'tags' => ['romance-language', 'culture'],
+                'icon' => '🇮🇹',
             ],
         ];
 
@@ -91,7 +110,7 @@ class DatabaseSeeder extends Seeder
                 'slug' => "complete-{$language->slug}-course",
                 'description' => "A comprehensive {$language->name} course covering all skill levels from beginner to advanced.",
                 'curriculum' => "Week 1-4: Basics\nWeek 5-8: Intermediate\nWeek 9-12: Advanced",
-                'languages_id' => $language->id,
+                'language_id' => $language->id,
                 'teacher_id' => $teacherUser->id,
                 'difficulty_level' => 'beginner',
                 'duration_weeks' => 12,

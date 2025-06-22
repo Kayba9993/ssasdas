@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,6 +21,8 @@ import AdminProfessors from "./components/admin/AdminProfessors";
 import AdminLanguages from "./components/admin/AdminLanguages";
 import AdminUsers from "./components/admin/AdminUsers";
 import AdminCourses from "./components/admin/AdminCourses";
+import AdminQuizzes from "./components/admin/AdminQuizzes";
+import AdminStudentApproval from "./components/admin/AdminStudentApproval";
 import AdminSettings from "./components/admin/AdminSettings";
 import AddUserPage from "./pages/admin/AddUserPage";
 import AddCoursePage from "./pages/admin/AddCoursePage";
@@ -59,6 +60,8 @@ const App = () => (
               <Route path="languages" element={<AdminLanguages />} />
               <Route path="users" element={<AdminUsers />} />
               <Route path="courses" element={<AdminCourses />} />
+              <Route path="quizzes" element={<AdminQuizzes />} />
+              <Route path="student-approval" element={<AdminStudentApproval />} />
               <Route path="settings" element={<AdminSettings />} />
               <Route path="add-user" element={<AddUserPage />} />
               <Route path="add-course" element={<AddCoursePage />} />

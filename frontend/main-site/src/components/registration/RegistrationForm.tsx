@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -23,19 +22,19 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { languages } from "@/data/languages";
-import { sendWhatsAppMessage } from "@/services/whatsappService";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { registerUser } from "@/services/api";
+import { useQuery } from "@tanstack/react-query";
+import { fetchLanguages } from "@/services/api";
 
 const formSchema = z.object({
   fullName: z.string().min(3),
-  age: z.string().refine((val) => !isNaN(Number(val))),
+  age: z.string().refine((val) => !isNaN(Number(val)) && Number(val) >= 10 && Number(val) <= 100),
   email: z.string().email(),
   phone: z.string().min(8),
   level: z.string().min(1),
   language: z.string().min(1),
   classType: z.string().min(1),
-  // Card details are handled in a separate tab now
 });
 
 const RegistrationForm = () => {
@@ -43,6 +42,11 @@ const RegistrationForm = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { t } = useLanguage();
+
+  const { data: languages, isLoading: languagesLoading } = useQuery({
+    queryKey: ['languages'],
+    queryFn: fetchLanguages
+  });
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -57,40 +61,31 @@ const RegistrationForm = () => {
     },
   });
 
-  // This would typically come from an environment variable or configuration
-  const whatsappAdminNumber = "212612345678"; // Example number with country code (Morocco)
-
-  const onSubmit = (data) => {
+  const onSubmit = async (data: any) => {
     setIsSubmitting(true);
 
     try {
-      // Format the message for WhatsApp
-      const message = `
-${t('whatsapp.newRegistration')}:
-${t('form.fullName')}: ${data.fullName}
-${t('form.age')}: ${data.age}
-${t('form.email')}: ${data.email}
-${t('form.phone')}: ${data.phone}
-${t('form.level')}: ${data.level}
-${t('form.language')}: ${data.language}
-${t('form.classType')}: ${data.classType}
-${t('form.paymentMethod')}: ${t('form.creditCard')}
-      `;
-
-      // Send the message via WhatsApp
-      sendWhatsAppMessage(whatsappAdminNumber, message);
+      const response = await registerUser({
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        age: parseInt(data.age),
+        level: data.level,
+        language: data.language,
+        classType: data.classType,
+      });
 
       toast({
         title: t('notifications.registrationSuccess'),
-        description: t('notifications.contactSoon'),
+        description: response.message || t('notifications.contactSoon'),
       });
 
       // Redirect to thank you page or home page
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: t('notifications.error'),
-        description: t('notifications.tryAgain'),
+        description: error.message || t('notifications.tryAgain'),
         variant: "destructive",
       });
     } finally {
@@ -218,11 +213,15 @@ ${t('form.paymentMethod')}: ${t('form.creditCard')}
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {languages.map((language) => (
-                        <SelectItem key={language.id} value={language.id}>
-                          {language.name} {language.flag}
-                        </SelectItem>
-                      ))}
+                      {languagesLoading ? (
+                        <SelectItem value="loading" disabled>Loading...</SelectItem>
+                      ) : (
+                        languages?.map((language: any) => (
+                          <SelectItem key={language.id} value={language.name}>
+                            {language.name} {language.icon}
+                          </SelectItem>
+                        ))
+                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />

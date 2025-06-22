@@ -18,13 +18,13 @@ class AuthController extends Controller
     public function register(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'fullName' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:student,teacher',
-            'student_id' => 'required_if:role,student|string|unique:students,student_id',
-            'employee_id' => 'required_if:role,teacher|string|unique:teachers,employee_id',
-            'department' => 'required_if:role,teacher|string',
+            'phone' => 'required|string|max:20',
+            'age' => 'required|integer|min:10|max:100',
+            'level' => 'required|in:beginner,intermediate,advanced',
+            'language' => 'required|string',
+            'classType' => 'required|in:individual,group,online',
         ]);
 
         if ($validator->fails()) {
@@ -34,35 +34,36 @@ class AuthController extends Controller
             ], 422);
         }
 
+        // Generate a temporary password
+        $tempPassword = 'temp' . rand(1000, 9999);
+
         $user = User::create([
-            'name' => $request->name,
+            'name' => $request->fullName,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
+            'password' => Hash::make($tempPassword),
+            'role' => 'student',
+            'is_active' => false, // Inactive until admin approval
         ]);
 
-        // Create role-specific profile
-        if ($request->role === 'student') {
-            Student::create([
-                'user_id' => $user->id,
-                'student_id' => $request->student_id,
-                'level' => 'beginner',
-            ]);
-        } elseif ($request->role === 'teacher') {
-            Teacher::create([
-                'user_id' => $user->id,
-                'employee_id' => $request->employee_id,
-                'department' => $request->department,
-            ]);
-        }
+        // Generate unique student ID
+        $studentId = 'STU' . str_pad($user->id, 6, '0', STR_PAD_LEFT);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        // Create student profile
+        Student::create([
+            'user_id' => $user->id,
+            'student_id' => $studentId,
+            'phone' => $request->phone,
+            'level' => $request->level,
+            'skills' => [$request->language],
+            'bio' => "Interested in learning {$request->language} - {$request->classType} classes",
+        ]);
 
         return response()->json([
-            'message' => 'Registration successful',
+            'message' => 'Registration successful. Your application is pending approval.',
             'data' => [
-                'user' => new UserResource($user->load($request->role)),
-                'token' => $token,
+                'user' => new UserResource($user->load('student')),
+                'temp_password' => $tempPassword,
+                'status' => 'pending_approval'
             ]
         ], 201);
     }
@@ -84,7 +85,7 @@ class AuthController extends Controller
 
         if (!$user->is_active) {
             return response()->json([
-                'message' => 'Account is inactive. Please contact administrator.'
+                'message' => 'Account is inactive or pending approval. Please contact administrator.'
             ], 403);
         }
 
@@ -93,6 +94,32 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Login successful',
+            'data' => [
+                'user' => new UserResource($user),
+                'token' => $token,
+            ]
+        ]);
+    }
+
+    public function adminLogin(Request $request): JsonResponse
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->where('role', 'admin')->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'message' => 'Invalid admin credentials'
+            ], 401);
+        }
+
+        $token = $user->createToken('admin_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Admin login successful',
             'data' => [
                 'user' => new UserResource($user),
                 'token' => $token,
@@ -140,6 +167,38 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Profile updated successfully',
             'data' => new UserResource($user->fresh()->load($user->role))
+        ]);
+    }
+
+    public function approveStudent(Request $request, User $user): JsonResponse
+    {
+        if ($user->role !== 'student') {
+            return response()->json(['message' => 'User is not a student'], 400);
+        }
+
+        $user->update(['is_active' => true]);
+
+        return response()->json([
+            'message' => 'Student approved successfully',
+            'data' => new UserResource($user->load('student'))
+        ]);
+    }
+
+    public function rejectStudent(Request $request, User $user): JsonResponse
+    {
+        if ($user->role !== 'student') {
+            return response()->json(['message' => 'User is not a student'], 400);
+        }
+
+        $request->validate([
+            'reason' => 'required|string|max:500'
+        ]);
+
+        // You might want to store the rejection reason
+        $user->delete(); // Or soft delete
+
+        return response()->json([
+            'message' => 'Student application rejected'
         ]);
     }
 }
