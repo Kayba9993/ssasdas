@@ -91,7 +91,7 @@ class DatabaseSeeder extends Seeder
                 'slug' => "complete-{$language->slug}-course",
                 'description' => "A comprehensive {$language->name} course covering all skill levels from beginner to advanced.",
                 'curriculum' => "Week 1-4: Basics\nWeek 5-8: Intermediate\nWeek 9-12: Advanced",
-                'language_id' => $language->id,
+                'languages_id' => $language->id,
                 'teacher_id' => $teacherUser->id,
                 'difficulty_level' => 'beginner',
                 'duration_weeks' => 12,

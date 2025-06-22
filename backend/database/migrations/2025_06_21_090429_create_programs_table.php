@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('description');
             $table->text('curriculum')->nullable();
-            $table->foreignUuid('language_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('languages_id')->constrained()->onDelete('cascade');
             $table->foreignUuid('teacher_id')->constrained('users')->onDelete('cascade');
             $table->enum('difficulty_level', ['beginner', 'intermediate', 'advanced']);
             $table->integer('duration_weeks');
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             
-            $table->index(['language_id', 'teacher_id', 'is_active']);
+            $table->index(['languages_id', 'teacher_id', 'is_active']);
         });
     }
 

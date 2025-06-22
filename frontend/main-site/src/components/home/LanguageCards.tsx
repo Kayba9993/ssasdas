@@ -10,6 +10,7 @@ import { ErrorMessage } from '../ui/ErrorMessage';
 export const LanguageCards: React.FC = () => {
   const { t } = useLanguage();
   const { data: languages, isLoading, error, refetch } = useLanguages();
+  console.log(languages);
 
   // Fallback data for when API is not available
   const fallbackLanguages = [
