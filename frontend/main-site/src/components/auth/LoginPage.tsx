@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, BookOpen, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 
-interface LoginPageProps {
-  onBack: () => void;
-}
-
-export const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
+export const LoginPage: React.FC = () => {
   const { login, loading, error } = useAuth();
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -25,6 +23,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
     try {
       await login(formData.email, formData.password);
       // Navigation will be handled by the auth context and App component
+      navigate('/');
     } catch (error) {
       // Error is handled by the auth context
       console.error('Login failed:', error);
@@ -43,6 +42,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
   const handleDemoLogin = async (email: string, password: string = 'password') => {
     try {
       await login(email, password);
+      navigate('/');
     } catch (error) {
       console.error('Demo login failed:', error);
     }
@@ -52,13 +52,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-emerald-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <button
-            onClick={onBack}
+          <Link
+            to="/"
             className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             {t('auth.backToHome')}
-          </button>
+          </Link>
           
           <div className="flex items-center justify-center mb-4">
             <BookOpen className="w-10 h-10 text-primary-600" />
@@ -169,9 +169,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600 dark:text-gray-300">
               {t('auth.noAccount')}{' '}
-              <button className="text-primary-600 hover:text-primary-700 font-medium">
+              <Link to="/register" className="text-primary-600 hover:text-primary-700 font-medium">
                 {t('auth.signUp')}
-              </button>
+              </Link>
             </p>
           </div>
         </Card>

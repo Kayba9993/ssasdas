@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, BookOpen, ArrowLeft, Check } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 
-interface RegisterPageProps {
-  onBack: () => void;
-  onLogin: () => void;
-}
-
-export const RegisterPage: React.FC<RegisterPageProps> = ({ onBack, onLogin }) => {
+export const RegisterPage: React.FC = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: '',
@@ -55,7 +52,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onBack, onLogin }) =
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
-      // Redirect to payment or success page
+      navigate('/payment');
     }, 2000);
   };
 
@@ -343,13 +340,13 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onBack, onLogin }) =
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-emerald-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <button
-            onClick={onBack}
+          <Link
+            to="/"
             className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             {t('auth.backToHome')}
-          </button>
+          </Link>
           
           <div className="flex items-center justify-center mb-4">
             <BookOpen className="w-10 h-10 text-primary-600" />
@@ -396,12 +393,12 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onBack, onLogin }) =
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600 dark:text-gray-300">
               {t('auth.haveAccount')}{' '}
-              <button 
-                onClick={onLogin}
+              <Link 
+                to="/login"
                 className="text-primary-600 hover:text-primary-700 font-medium"
               >
                 {t('auth.signIn')}
-              </button>
+              </Link>
             </p>
           </div>
         </Card>

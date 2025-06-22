@@ -3,7 +3,7 @@ export const translations = {
     // Navigation
     nav: {
       home: 'Home',
-      courses: 'Courses',
+      courses: 'Programs',
       about: 'About',
       contact: 'Contact',
       login: 'Login',
@@ -23,13 +23,6 @@ export const translations = {
       title: 'Choose Your Language',
       subtitle: 'Available languages with certified instructors',
       startLearning: 'Start Learning',
-    },
-    // Live Sessions
-    liveSessions: {
-      title: 'Upcoming Live Sessions',
-      subtitle: 'Join live interactive sessions with expert teachers',
-      joinNow: 'Join Now',
-      seeAll: 'See All Sessions',
     },
     // Testimonials
     testimonials: {
@@ -176,7 +169,7 @@ export const translations = {
     // Navigation (Arabic - RTL)
     nav: {
       home: 'الرئيسية',
-      courses: 'الدورات',
+      courses: 'البرامج',
       about: 'حول',
       contact: 'اتصل بنا',
       login: 'تسجيل الدخول',
@@ -194,12 +187,6 @@ export const translations = {
       title: 'اختر لغتك',
       subtitle: 'اللغات المتاحة مع مدرسين معتمدين',
       startLearning: 'ابدأ التعلم',
-    },
-    liveSessions: {
-      title: 'الجلسات المباشرة القادمة',
-      subtitle: 'انضم إلى جلسات مباشرة تفاعلية مع معلمين خبراء',
-      joinNow: 'انضم الآن',
-      seeAll: 'عرض جميع الجلسات',
     },
     testimonials: {
       title: 'ماذا يقول طلابنا',
@@ -337,7 +324,7 @@ export const translations = {
   es: {
     nav: {
       home: 'Inicio',
-      courses: 'Cursos',
+      courses: 'Programas',
       about: 'Acerca',
       contact: 'Contacto',
       login: 'Iniciar Sesión',
@@ -355,12 +342,6 @@ export const translations = {
       title: 'Elige Tu Idioma',
       subtitle: 'Idiomas disponibles con instructores certificados',
       startLearning: 'Comenzar a Aprender',
-    },
-    liveSessions: {
-      title: 'Próximas Sesiones en Vivo',
-      subtitle: 'Únete a sesiones interactivas en vivo con profesores expertos',
-      joinNow: 'Unirse Ahora',
-      seeAll: 'Ver Todas las Sesiones',
     },
     testimonials: {
       title: 'Lo Que Dicen Nuestros Estudiantes',
