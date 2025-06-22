@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('enrollments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('student_id')->constrained('users')->onDelete('cascade');
-            $table->foreignUuid('program_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('programs_id')->constrained()->onDelete('cascade');
             $table->enum('status', ['enrolled', 'completed', 'dropped', 'suspended'])->default('enrolled');
             $table->decimal('progress_percentage', 5, 2)->default(0);
             $table->timestamp('enrolled_at');
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             
-            $table->unique(['student_id', 'program_id']);
+            $table->unique(['student_id', 'programs_id']);
             $table->index(['student_id', 'status']);
         });
     }

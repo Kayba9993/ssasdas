@@ -89,11 +89,12 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
+        if($user->role=='student'||$user->role=='teacher')$user->load($user->role);
 
         return response()->json([
             'message' => 'Login successful',
             'data' => [
-                'user' => new UserResource($user->load($user->role)),
+                'user' => new UserResource($user),
                 'token' => $token,
             ]
         ]);

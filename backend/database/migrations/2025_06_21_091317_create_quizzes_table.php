@@ -12,7 +12,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->foreignUuid('program_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('programs_id')->constrained()->onDelete('cascade');
             $table->foreignUuid('teacher_id')->constrained('users')->onDelete('cascade');
             $table->integer('total_questions');
             $table->integer('time_limit_minutes')->nullable();
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             
-            $table->index(['program_id', 'is_active']);
+            $table->index(['programs_id', 'is_active']);
         });
     }
 
