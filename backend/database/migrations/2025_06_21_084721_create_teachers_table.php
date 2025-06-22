@@ -17,6 +17,9 @@ return new class extends Migration
             $table->json('specializations')->nullable();
             $table->integer('years_experience')->default(0);
             $table->string('qualification')->nullable();
+            $table->string('phone')->nullable();
+            $table->decimal('hourly_rate', 8, 2)->nullable();
+            $table->boolean('is_available')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

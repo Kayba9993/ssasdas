@@ -40,6 +40,9 @@ class DatabaseSeeder extends Seeder
             'specializations' => ['Spanish', 'French', 'Italian'],
             'years_experience' => 10,
             'qualification' => 'PhD in Linguistics',
+            'phone' => '+212612345678',
+            'hourly_rate' => 50.00,
+            'is_available' => true,
         ]);
 
         // Create sample student
@@ -55,6 +58,9 @@ class DatabaseSeeder extends Seeder
             'student_id' => 'STU001',
             'level' => 'beginner',
             'skills' => ['listening', 'reading'],
+            'phone' => '+212612345679',
+            'learning_goals' => 'Improve conversational skills',
+            'preferred_schedule' => ['evening', 'weekend'],
         ]);
 
         // Create languages

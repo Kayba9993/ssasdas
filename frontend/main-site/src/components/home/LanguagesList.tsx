@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -60,10 +59,10 @@ const LanguagesList = () => {
             <Card key={language.id} className="transition-all hover:shadow-lg">
               <CardContent className="p-6 text-center">
                 <div className="text-5xl mb-4">
-                  {language.flag}
+                  {language.icon}
                 </div>
                 <h3 className={`text-xl font-bold mb-2 ${dir === 'rtl' ? 'rtl' : 'ltr'}`}>{language.name}</h3>
-                <p className="text-gray-500 mb-4">{language.nativeName}</p>
+                <p className="text-gray-500 mb-4">{language.description}</p>
                 <Button 
                   variant="outline"
                   className="w-full border-academy-green text-academy-green hover:bg-academy-green hover:text-white"

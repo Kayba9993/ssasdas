@@ -1,59 +1,25 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Lock, User } from "lucide-react";
 import Logo from "@/components/common/Logo";
-import { adminLogin } from "@/services/api";
-import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 const AdminLoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-  const { toast } = useToast();
+  const { adminLogin, isAdminLoginLoading } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     
     if (!email || !password) {
-      toast({
-        title: "خطأ",
-        description: "الرجاء إدخال البريد الإلكتروني وكلمة المرور",
-        variant: "destructive"
-      });
-      setIsLoading(false);
       return;
     }
     
-    try {
-      const response = await adminLogin({ email, password });
-      console.log(response)
-      
-      // Store authentication token
-      localStorage.setItem("auth_token", response.data.token);
-      localStorage.setItem("adminAuthenticated", "true");
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      
-      toast({
-        title: "تم تسجيل الدخول بنجاح",
-        description: "مرحباً بك في لوحة التحكم"
-      });
-      
-      navigate("/admin");
-    } catch (error: any) {
-      toast({
-        title: "خطأ في تسجيل الدخول",
-        description: error.message || "بريد إلكتروني أو كلمة مرور غير صحيحة",
-        variant: "destructive"
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    adminLogin({ email, password });
   };
 
   return (
@@ -78,7 +44,7 @@ const AdminLoginPage = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pr-8"
-                  disabled={isLoading}
+                  disabled={isAdminLoginLoading}
                 />
               </div>
             </div>
@@ -94,13 +60,13 @@ const AdminLoginPage = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="pr-8"
-                  disabled={isLoading}
+                  disabled={isAdminLoginLoading}
                 />
               </div>
             </div>
             
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
+            <Button type="submit" className="w-full" disabled={isAdminLoginLoading}>
+              {isAdminLoginLoading ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
             </Button>
           </form>
         </CardContent>

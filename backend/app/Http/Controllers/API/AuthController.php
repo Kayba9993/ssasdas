@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -34,38 +35,57 @@ class AuthController extends Controller
             ], 422);
         }
 
-        // Generate a temporary password
-        $tempPassword = 'temp' . rand(1000, 9999);
+        DB::beginTransaction();
 
-        $user = User::create([
-            'name' => $request->fullName,
-            'email' => $request->email,
-            'password' => Hash::make($tempPassword),
-            'role' => 'student',
-            'is_active' => false, // Inactive until admin approval
-        ]);
+        try {
+            // Generate a temporary password
+            $tempPassword = 'temp' . rand(1000, 9999);
 
-        // Generate unique student ID
-        $studentId = 'STU' . str_pad($user->id, 6, '0', STR_PAD_LEFT);
+            $user = User::create([
+                'name' => $request->fullName,
+                'email' => $request->email,
+                'password' => Hash::make($tempPassword),
+                'role' => 'student',
+                'is_active' => false, // Inactive until admin approval
+            ]);
 
-        // Create student profile
-        Student::create([
-            'user_id' => $user->id,
-            'student_id' => $studentId,
-            'phone' => $request->phone,
-            'level' => $request->level,
-            'skills' => [$request->language],
-            'bio' => "Interested in learning {$request->language} - {$request->classType} classes",
-        ]);
+            // Generate unique student ID
+            $studentId = 'STU' . str_pad($user->id, 6, '0', STR_PAD_LEFT);
 
-        return response()->json([
-            'message' => 'Registration successful. Your application is pending approval.',
-            'data' => [
-                'user' => new UserResource($user->load('student')),
-                'temp_password' => $tempPassword,
-                'status' => 'pending_approval'
-            ]
-        ], 201);
+            // Create student profile
+            Student::create([
+                'user_id' => $user->id,
+                'student_id' => $studentId,
+                'phone' => $request->phone,
+                'level' => $request->level,
+                'skills' => [$request->language],
+                'bio' => "Interested in learning {$request->language} - {$request->classType} classes",
+                'learning_goals' => "Learn {$request->language} through {$request->classType} classes",
+                'preferred_schedule' => [
+                    'class_type' => $request->classType,
+                    'language' => $request->language,
+                    'level' => $request->level
+                ]
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Registration successful. Your application is pending approval. You will be contacted soon with your login credentials.',
+                'data' => [
+                    'user' => new UserResource($user->load('student')),
+                    'temp_password' => $tempPassword,
+                    'status' => 'pending_approval'
+                ]
+            ], 201);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Registration failed. Please try again.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function login(Request $request): JsonResponse
@@ -161,7 +181,7 @@ class AuthController extends Controller
         if ($user->is_student && $user->student) {
             $user->student->update($request->only(['bio', 'phone']));
         } elseif ($user->is_teacher && $user->teacher) {
-            $user->teacher->update($request->only(['bio']));
+            $user->teacher->update($request->only(['bio', 'phone']));
         }
 
         return response()->json([

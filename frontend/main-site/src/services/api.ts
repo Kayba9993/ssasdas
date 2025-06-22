@@ -1,266 +1,247 @@
+import axios from '@/lib/axios';
 import { Language, Professor } from "@/types";
 
-const API_BASE_URL = 'http://localhost:8000/api/v1';
+// Types
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  avatar?: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  student?: any;
+  teacher?: any;
+}
 
-// Helper function to get auth headers
-const getAuthHeaders = () => {
-  const token = localStorage.getItem('auth_token');
-  return {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    ...(token && { 'Authorization': `Bearer ${token}` })
+export interface ApiResponse<T> {
+  data: T;
+  message?: string;
+}
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  meta: {
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
   };
-};
+}
 
 // Auth APIs
-export const registerUser = async (userData: any) => {
-  const response = await fetch(`${API_BASE_URL}/auth/register`, {
-    method: 'POST',
-    headers: getAuthHeaders(),
-    body: JSON.stringify(userData)
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Registration failed');
-  }
-  
-  return response.json();
+export const registerUser = async (userData: any): Promise<ApiResponse<any>> => {
+  const response = await axios.post('/auth/register', userData);
+  return response.data;
 };
 
-export const loginUser = async (credentials: { email: string; password: string }) => {
-  const response = await fetch(`${API_BASE_URL}/auth/login`, {
-    method: 'POST',
-    headers: getAuthHeaders(),
-    body: JSON.stringify(credentials)
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Login failed');
-  }
-  
-  return response.json();
+export const loginUser = async (credentials: { email: string; password: string }): Promise<ApiResponse<{ user: User; token: string }>> => {
+  const response = await axios.post('/auth/login', credentials);
+  return response.data;
 };
 
-export const adminLogin = async (credentials: { email: string; password: string }) => {
-  const response = await fetch(`${API_BASE_URL}/auth/login`, {
-    method: 'POST',
-    headers: getAuthHeaders(),
-    body: JSON.stringify(credentials)
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Admin login failed');
-  }
-  
-  return response.json();
+export const adminLogin = async (credentials: { email: string; password: string }): Promise<ApiResponse<{ user: User; token: string }>> => {
+  const response = await axios.post('/auth/admin-login', credentials);
+  return response.data;
 };
 
-export const logoutUser = async () => {
-  const response = await fetch(`${API_BASE_URL}/auth/logout`, {
-    method: 'POST',
-    headers: getAuthHeaders()
-  });
-  
-  if (!response.ok) {
-    throw new Error('Logout failed');
-  }
-  
-  return response.json();
+export const logoutUser = async (): Promise<ApiResponse<any>> => {
+  const response = await axios.post('/auth/logout');
+  return response.data;
 };
 
-export const getCurrentUser = async () => {
-  const response = await fetch(`${API_BASE_URL}/auth/user`, {
-    headers: getAuthHeaders()
-  });
-  
-  if (!response.ok) {
-    throw new Error('Failed to get user');
-  }
-  
-  return response.json();
+export const getCurrentUser = async (): Promise<ApiResponse<User>> => {
+  const response = await axios.get('/auth/user');
+  return response.data;
+};
+
+export const updateProfile = async (profileData: any): Promise<ApiResponse<User>> => {
+  const response = await axios.put('/auth/profile', profileData);
+  return response.data;
 };
 
 // Language APIs
 export const fetchLanguages = async (): Promise<Language[]> => {
-  const response = await fetch(`${API_BASE_URL}/languages`, {
-    headers: getAuthHeaders()
-  });
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch languages');
-  }
-  
-  const data = await response.json();
-  return data.data;
+  const response = await axios.get('/languages');
+  return response.data.data;
 };
 
-export const createLanguage = async (languageData: any) => {
-  const response = await fetch(`${API_BASE_URL}/admin/languages`, {
-    method: 'POST',
-    headers: getAuthHeaders(),
-    body: JSON.stringify(languageData)
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Failed to create language');
-  }
-  
-  return response.json();
+export const fetchLanguageById = async (id: string): Promise<Language> => {
+  const response = await axios.get(`/languages/${id}`);
+  return response.data.data;
 };
 
-export const updateLanguage = async (id: string, languageData: any) => {
-  const response = await fetch(`${API_BASE_URL}/admin/languages/${id}`, {
-    method: 'PUT',
-    headers: getAuthHeaders(),
-    body: JSON.stringify(languageData)
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Failed to update language');
-  }
-  
-  return response.json();
+export const createLanguage = async (languageData: any): Promise<ApiResponse<Language>> => {
+  const response = await axios.post('/admin/languages', languageData);
+  return response.data;
 };
 
-export const deleteLanguage = async (id: string) => {
-  const response = await fetch(`${API_BASE_URL}/admin/languages/${id}`, {
-    method: 'DELETE',
-    headers: getAuthHeaders()
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Failed to delete language');
-  }
-  
-  return response.json();
+export const updateLanguage = async (id: string, languageData: any): Promise<ApiResponse<Language>> => {
+  const response = await axios.put(`/admin/languages/${id}`, languageData);
+  return response.data;
+};
+
+export const deleteLanguage = async (id: string): Promise<ApiResponse<any>> => {
+  const response = await axios.delete(`/admin/languages/${id}`);
+  return response.data;
+};
+
+// Program APIs
+export const fetchPrograms = async (params?: any): Promise<PaginatedResponse<any>> => {
+  const response = await axios.get('/programs', { params });
+  return response.data;
+};
+
+export const fetchProgramById = async (id: string): Promise<ApiResponse<any>> => {
+  const response = await axios.get(`/programs/${id}`);
+  return response.data;
+};
+
+export const createProgram = async (programData: any): Promise<ApiResponse<any>> => {
+  const response = await axios.post('/teacher/programs', programData);
+  return response.data;
+};
+
+export const updateProgram = async (id: string, programData: any): Promise<ApiResponse<any>> => {
+  const response = await axios.put(`/teacher/programs/${id}`, programData);
+  return response.data;
+};
+
+export const deleteProgram = async (id: string): Promise<ApiResponse<any>> => {
+  const response = await axios.delete(`/teacher/programs/${id}`);
+  return response.data;
 };
 
 // Quiz APIs
-export const fetchQuizzes = async () => {
-  const response = await fetch(`${API_BASE_URL}/admin/quizzes`, {
-    headers: getAuthHeaders()
-  });
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch quizzes');
-  }
-  
-  return response.json();
+export const fetchQuizzes = async (params?: any): Promise<PaginatedResponse<any>> => {
+  const response = await axios.get('/teacher/quizzes', { params });
+  return response.data;
 };
 
-export const createQuiz = async (quizData: any) => {
-  const response = await fetch(`${API_BASE_URL}/admin/quizzes`, {
-    method: 'POST',
-    headers: getAuthHeaders(),
-    body: JSON.stringify(quizData)
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Failed to create quiz');
-  }
-  
-  return response.json();
+export const fetchQuizById = async (id: string): Promise<ApiResponse<any>> => {
+  const response = await axios.get(`/quizzes/${id}`);
+  return response.data;
 };
 
-export const updateQuiz = async (id: string, quizData: any) => {
-  const response = await fetch(`${API_BASE_URL}/admin/quizzes/${id}`, {
-    method: 'PUT',
-    headers: getAuthHeaders(),
-    body: JSON.stringify(quizData)
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Failed to update quiz');
-  }
-  
-  return response.json();
+export const createQuiz = async (quizData: any): Promise<ApiResponse<any>> => {
+  const response = await axios.post('/teacher/quizzes', quizData);
+  return response.data;
 };
 
-export const deleteQuiz = async (id: string) => {
-  const response = await fetch(`${API_BASE_URL}/admin/quizzes/${id}`, {
-    method: 'DELETE',
-    headers: getAuthHeaders()
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Failed to delete quiz');
-  }
-  
-  return response.json();
+export const updateQuiz = async (id: string, quizData: any): Promise<ApiResponse<any>> => {
+  const response = await axios.put(`/teacher/quizzes/${id}`, quizData);
+  return response.data;
+};
+
+export const deleteQuiz = async (id: string): Promise<ApiResponse<any>> => {
+  const response = await axios.delete(`/teacher/quizzes/${id}`);
+  return response.data;
 };
 
 // Student management APIs
-export const fetchPendingStudents = async () => {
-  const response = await fetch(`${API_BASE_URL}/admin/students/pending`, {
-    headers: getAuthHeaders()
-  });
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch pending students');
-  }
-  
-  return response.json();
+export const fetchPendingStudents = async (): Promise<ApiResponse<User[]>> => {
+  const response = await axios.get('/admin/students/pending');
+  return response.data;
 };
 
-export const approveStudent = async (userId: string) => {
-  const response = await fetch(`${API_BASE_URL}/admin/students/${userId}/approve`, {
-    method: 'POST',
-    headers: getAuthHeaders()
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Failed to approve student');
-  }
-  
-  return response.json();
+export const approveStudent = async (userId: string): Promise<ApiResponse<User>> => {
+  const response = await axios.post(`/admin/students/${userId}/approve`);
+  return response.data;
 };
 
-export const rejectStudent = async (userId: string, reason: string) => {
-  const response = await fetch(`${API_BASE_URL}/admin/students/${userId}/reject`, {
-    method: 'POST',
-    headers: getAuthHeaders(),
-    body: JSON.stringify({ reason })
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Failed to reject student');
-  }
-  
-  return response.json();
+export const rejectStudent = async (userId: string, reason: string): Promise<ApiResponse<any>> => {
+  const response = await axios.post(`/admin/students/${userId}/reject`, { reason });
+  return response.data;
+};
+
+// User management APIs
+export const fetchUsers = async (params?: any): Promise<PaginatedResponse<User>> => {
+  const response = await axios.get('/admin/users', { params });
+  return response.data;
+};
+
+export const fetchUserById = async (id: string): Promise<ApiResponse<User>> => {
+  const response = await axios.get(`/admin/users/${id}`);
+  return response.data;
+};
+
+export const createUser = async (userData: any): Promise<ApiResponse<User>> => {
+  const response = await axios.post('/admin/users', userData);
+  return response.data;
+};
+
+export const updateUser = async (id: string, userData: any): Promise<ApiResponse<User>> => {
+  const response = await axios.put(`/admin/users/${id}`, userData);
+  return response.data;
+};
+
+export const deleteUser = async (id: string): Promise<ApiResponse<any>> => {
+  const response = await axios.delete(`/admin/users/${id}`);
+  return response.data;
 };
 
 // Dashboard APIs
-export const fetchAdminDashboard = async () => {
-  const response = await fetch(`${API_BASE_URL}/dashboard/admin`, {
-    headers: getAuthHeaders()
+export const fetchAdminDashboard = async (): Promise<ApiResponse<any>> => {
+  const response = await axios.get('/dashboard/admin');
+  return response.data;
+};
+
+export const fetchStudentDashboard = async (): Promise<ApiResponse<any>> => {
+  const response = await axios.get('/dashboard/student');
+  return response.data;
+};
+
+export const fetchTeacherDashboard = async (): Promise<ApiResponse<any>> => {
+  const response = await axios.get('/dashboard/teacher');
+  return response.data;
+};
+
+// Enrollment APIs
+export const fetchEnrollments = async (params?: any): Promise<PaginatedResponse<any>> => {
+  const response = await axios.get('/enrollments', { params });
+  return response.data;
+};
+
+export const enrollInProgram = async (programId: string): Promise<ApiResponse<any>> => {
+  const response = await axios.post(`/enrollments/programs/${programId}`);
+  return response.data;
+};
+
+// Live Sessions APIs
+export const fetchLiveSessions = async (params?: any): Promise<PaginatedResponse<any>> => {
+  const response = await axios.get('/live-sessions', { params });
+  return response.data;
+};
+
+export const joinLiveSession = async (sessionId: string): Promise<ApiResponse<any>> => {
+  const response = await axios.post(`/live-sessions/${sessionId}/join`);
+  return response.data;
+};
+
+// Media APIs
+export const uploadMedia = async (formData: FormData): Promise<ApiResponse<any>> => {
+  const response = await axios.post('/media/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch admin dashboard');
-  }
-  
-  return response.json();
+  return response.data;
 };
 
-// Legacy APIs for compatibility
-export const fetchLanguageById = async (id: string): Promise<Language | undefined> => {
-  const languages = await fetchLanguages();
-  return languages.find(lang => lang.id === id);
+export const fetchMedia = async (params?: any): Promise<PaginatedResponse<any>> => {
+  const response = await axios.get('/media', { params });
+  return response.data;
 };
 
+export const deleteMedia = async (id: string): Promise<ApiResponse<any>> => {
+  const response = await axios.delete(`/media/${id}`);
+  return response.data;
+};
+
+// Legacy compatibility functions
 export const fetchProfessors = async (): Promise<Professor[]> => {
-  // This would be replaced with actual API call
+  // This would be replaced with actual API call when professors endpoint is available
   const professors = [
     {
       id: "1",

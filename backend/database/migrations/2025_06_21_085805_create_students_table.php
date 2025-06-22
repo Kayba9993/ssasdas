@@ -17,6 +17,10 @@ return new class extends Migration
             $table->text('bio')->nullable();
             $table->json('skills')->nullable();
             $table->enum('level', ['beginner', 'intermediate', 'advanced'])->default('beginner');
+            $table->string('emergency_contact')->nullable();
+            $table->string('emergency_phone')->nullable();
+            $table->text('learning_goals')->nullable();
+            $table->json('preferred_schedule')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

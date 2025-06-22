@@ -3,6 +3,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -23,9 +24,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { registerUser } from "@/services/api";
-import { useQuery } from "@tanstack/react-query";
-import { fetchLanguages } from "@/services/api";
+import { registerUser, fetchLanguages } from "@/services/api";
 
 const formSchema = z.object({
   fullName: z.string().min(3),
@@ -38,7 +37,6 @@ const formSchema = z.object({
 });
 
 const RegistrationForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const { t } = useLanguage();
@@ -61,36 +59,34 @@ const RegistrationForm = () => {
     },
   });
 
-  const onSubmit = async (data: any) => {
-    setIsSubmitting(true);
-
-    try {
-      const response = await registerUser({
-        fullName: data.fullName,
-        email: data.email,
-        phone: data.phone,
-        age: parseInt(data.age),
-        level: data.level,
-        language: data.language,
-        classType: data.classType,
-      });
-
+  const registerMutation = useMutation({
+    mutationFn: registerUser,
+    onSuccess: (response) => {
       toast({
         title: t('notifications.registrationSuccess'),
         description: response.message || t('notifications.contactSoon'),
       });
-
-      // Redirect to thank you page or home page
       navigate("/");
-    } catch (error: any) {
+    },
+    onError: (error: any) => {
       toast({
         title: t('notifications.error'),
-        description: error.message || t('notifications.tryAgain'),
+        description: error.response?.data?.message || t('notifications.tryAgain'),
         variant: "destructive",
       });
-    } finally {
-      setIsSubmitting(false);
     }
+  });
+
+  const onSubmit = async (data: any) => {
+    registerMutation.mutate({
+      fullName: data.fullName,
+      email: data.email,
+      phone: data.phone,
+      age: parseInt(data.age),
+      level: data.level,
+      language: data.language,
+      classType: data.classType,
+    });
   };
 
   return (
@@ -258,9 +254,9 @@ const RegistrationForm = () => {
             <Button
               type="submit"
               className="w-full bg-academy-green hover:bg-opacity-90"
-              disabled={isSubmitting}
+              disabled={registerMutation.isPending}
             >
-              {isSubmitting ? t('button.registering') : t('button.submitRegistration')}
+              {registerMutation.isPending ? t('button.registering') : t('button.submitRegistration')}
             </Button>
           </form>
         </Form>
