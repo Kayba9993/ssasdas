@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
             'employee_id' => 'TEACH001',
             'department' => 'Language Studies',
             'bio' => 'Experienced language instructor with 10+ years of teaching.',
-            'specializations' => ['Spanish', 'French', 'Italian'],
+            'specializations' => ['Spanish', 'Italian'],
             'years_experience' => 10,
             'qualification' => 'PhD in Linguistics',
             'phone' => '+212612345678',
@@ -45,23 +45,23 @@ class DatabaseSeeder extends Seeder
             'is_available' => true,
         ]);
 
-        // Create sample student
-        $studentUser = User::create([
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'student',
-        ]);
+        // // Create sample student
+        // $studentUser = User::create([
+        //     'name' => 'John Doe',
+        //     'email' => 'john@example.com',
+        //     'password' => Hash::make('password'),
+        //     'role' => 'student',
+        // ]);
 
-        $student = Student::create([
-            'user_id' => $studentUser->id,
-            'student_id' => 'STU001',
-            'level' => 'beginner',
-            'skills' => ['listening', 'reading'],
-            'phone' => '+212612345679',
-            'learning_goals' => 'Improve conversational skills',
-            'preferred_schedule' => ['evening', 'weekend'],
-        ]);
+        // $student = Student::create([
+        //     'user_id' => $studentUser->id,
+        //     'student_id' => 'STU001',
+        //     'level' => 'beginner',
+        //     'skills' => ['listening', 'reading'],
+        //     'phone' => '+212612345679',
+        //     'learning_goals' => 'Improve conversational skills',
+        //     'preferred_schedule' => ['evening', 'weekend'],
+        // ]);
 
         // Create languages
         $languages = [
@@ -72,24 +72,7 @@ class DatabaseSeeder extends Seeder
                 'difficulty_level' => 'intermediate',
                 'tags' => ['popular', 'business'],
                 'icon' => '🇬🇧',
-            ],
-            [
-                'name' => 'الفرنسية',
-                'slug' => 'french',
-                'description' => 'Master the French language with comprehensive courses',
-                'difficulty_level' => 'intermediate',
-                'tags' => ['popular', 'romance-language'],
-                'icon' => '🇫🇷',
-            ],
-            [
-                'name' => 'الألمانية',
-                'slug' => 'german',
-                'description' => 'Learn German systematically with structured lessons',
-                'difficulty_level' => 'advanced',
-                'tags' => ['european', 'business'],
-                'icon' => '🇩🇪',
-            ],
-            [
+            ],[
                 'name' => 'الإسبانية',
                 'slug' => 'spanish',
                 'description' => 'Learn Spanish with native speakers',
@@ -97,14 +80,7 @@ class DatabaseSeeder extends Seeder
                 'tags' => ['popular', 'romance-language'],
                 'icon' => '🇪🇸',
             ],
-            [
-                'name' => 'الإيطالية',
-                'slug' => 'italian',
-                'description' => 'Discover the beauty of Italian language',
-                'difficulty_level' => 'intermediate',
-                'tags' => ['romance-language', 'culture'],
-                'icon' => '🇮🇹',
-            ],
+            
         ];
 
         foreach ($languages as $languageData) {
@@ -116,7 +92,7 @@ class DatabaseSeeder extends Seeder
                 'slug' => "complete-{$language->slug}-course",
                 'description' => "A comprehensive {$language->name} course covering all skill levels from beginner to advanced.",
                 'curriculum' => "Week 1-4: Basics\nWeek 5-8: Intermediate\nWeek 9-12: Advanced",
-                'language_id' => $language->id,
+                'languages_id' => $language->id,
                 'teacher_id' => $teacherUser->id,
                 'difficulty_level' => 'beginner',
                 'duration_weeks' => 12,

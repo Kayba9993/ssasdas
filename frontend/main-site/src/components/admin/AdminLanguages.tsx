@@ -42,6 +42,7 @@ const AdminLanguages = () => {
     queryKey: ['languages'],
     queryFn: fetchLanguages
   });
+  console.log('languages data:',languages)
 
   const form = useForm<LanguageFormValues>({
     defaultValues: {

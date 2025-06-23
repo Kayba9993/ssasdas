@@ -82,7 +82,7 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     });
     
     // Teacher routes
-    Route::middleware('role:teacher')->prefix('teacher')->group(function () {
+    Route::middleware(['role:teacher','role:admin'])->prefix('teacher')->group(function () {
         Route::apiResource('programs', ProgramsController::class)->except(['index', 'show']);
         Route::apiResource('live-sessions', LiveSessionsController::class)->except(['index', 'show']);
         Route::apiResource('quizzes', QuizController::class)->except(['show']);

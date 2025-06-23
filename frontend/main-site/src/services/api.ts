@@ -42,7 +42,8 @@ export const loginUser = async (credentials: { email: string; password: string }
 };
 
 export const adminLogin = async (credentials: { email: string; password: string }): Promise<ApiResponse<{ user: User; token: string }>> => {
-  const response = await axios.post('/auth/admin-login', credentials);
+  const response = await axios.post('/auth/login', credentials);
+  console.log("data fetch",response)
   return response.data;
 };
 
@@ -63,12 +64,12 @@ export const updateProfile = async (profileData: any): Promise<ApiResponse<User>
 
 // Language APIs
 export const fetchLanguages = async (): Promise<Language[]> => {
-  const response = await axios.get('/languages');
+  const response = await axios.get('/admin/languages');
   return response.data.data;
 };
 
 export const fetchLanguageById = async (id: string): Promise<Language> => {
-  const response = await axios.get(`/languages/${id}`);
+  const response = await axios.get(`/admin/languages/${id}`);
   return response.data.data;
 };
 
@@ -99,23 +100,23 @@ export const fetchProgramById = async (id: string): Promise<ApiResponse<any>> =>
 };
 
 export const createProgram = async (programData: any): Promise<ApiResponse<any>> => {
-  const response = await axios.post('/teacher/programs', programData);
+  const response = await axios.post('/admin/programs', programData);
   return response.data;
 };
 
 export const updateProgram = async (id: string, programData: any): Promise<ApiResponse<any>> => {
-  const response = await axios.put(`/teacher/programs/${id}`, programData);
+  const response = await axios.put(`/admin/programs/${id}`, programData);
   return response.data;
 };
 
 export const deleteProgram = async (id: string): Promise<ApiResponse<any>> => {
-  const response = await axios.delete(`/teacher/programs/${id}`);
+  const response = await axios.delete(`/admin/programs/${id}`);
   return response.data;
 };
 
 // Quiz APIs
 export const fetchQuizzes = async (params?: any): Promise<PaginatedResponse<any>> => {
-  const response = await axios.get('/teacher/quizzes', { params });
+  const response = await axios.get('/admin/quizzes', { params });
   return response.data;
 };
 
@@ -125,17 +126,17 @@ export const fetchQuizById = async (id: string): Promise<ApiResponse<any>> => {
 };
 
 export const createQuiz = async (quizData: any): Promise<ApiResponse<any>> => {
-  const response = await axios.post('/teacher/quizzes', quizData);
+  const response = await axios.post('/admin/quizzes', quizData);
   return response.data;
 };
 
 export const updateQuiz = async (id: string, quizData: any): Promise<ApiResponse<any>> => {
-  const response = await axios.put(`/teacher/quizzes/${id}`, quizData);
+  const response = await axios.put(`/admin/quizzes/${id}`, quizData);
   return response.data;
 };
 
 export const deleteQuiz = async (id: string): Promise<ApiResponse<any>> => {
-  const response = await axios.delete(`/teacher/quizzes/${id}`);
+  const response = await axios.delete(`/admin/quizzes/${id}`);
   return response.data;
 };
 
