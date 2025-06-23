@@ -8,7 +8,9 @@ import {
   Settings,
   BookOpen,
   ClipboardList,
-  UserCheck
+  UserCheck,
+  GraduationCap,
+  Video
 } from "lucide-react";
 
 const AdminSidebar = () => {
@@ -30,8 +32,13 @@ const AdminSidebar = () => {
       icon: Users 
     },
     { 
+      name: "الطلاب", 
+      path: "/admin/students", 
+      icon: GraduationCap 
+    },
+    { 
       name: "المدرسين", 
-      path: "/admin/professors", 
+      path: "/admin/teachers", 
       icon: UserPlus 
     },
     { 
@@ -40,14 +47,19 @@ const AdminSidebar = () => {
       icon: Languages 
     },
     { 
-      name: "الدورات", 
-      path: "/admin/courses", 
+      name: "البرامج", 
+      path: "/admin/programs", 
       icon: BookOpen 
     },
     { 
       name: "الاختبارات", 
       path: "/admin/quizzes", 
       icon: ClipboardList 
+    },
+    { 
+      name: "الجلسات المباشرة", 
+      path: "/admin/live-sessions", 
+      icon: Video 
     },
     { 
       name: "طلبات التسجيل", 

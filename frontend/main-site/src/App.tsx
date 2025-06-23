@@ -17,19 +17,15 @@ import AdminLoginPage from "./pages/AdminLoginPage";
 // Admin pages
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 import AdminDashboardOverview from "./components/admin/AdminDashboardOverview";
-import AdminProfessors from "./components/admin/AdminProfessors";
+import AdminStudents from "./components/admin/AdminStudents";
+import AdminTeachers from "./components/admin/AdminTeachers";
 import AdminLanguages from "./components/admin/AdminLanguages";
 import AdminUsers from "./components/admin/AdminUsers";
-import AdminCourses from "./components/admin/AdminCourses";
+import AdminPrograms from "./components/admin/AdminPrograms";
 import AdminQuizzes from "./components/admin/AdminQuizzes";
+import AdminLiveSessions from "./components/admin/AdminLiveSessions";
 import AdminStudentApproval from "./components/admin/AdminStudentApproval";
 import AdminSettings from "./components/admin/AdminSettings";
-import AddUserPage from "./pages/admin/AddUserPage";
-import AddCoursePage from "./pages/admin/AddCoursePage";
-import EditUserPage from "./pages/admin/EditUserPage";
-import EditCoursePage from "./pages/admin/EditCoursePage";
-import EditProfessorPage from "./pages/admin/EditProfessorPage";
-import EditLanguagePage from "./pages/admin/EditLanguagePage";
 
 const queryClient = new QueryClient();
 
@@ -56,19 +52,15 @@ const App = () => (
             {/* Admin routes */}
             <Route path="/admin" element={<AdminDashboardPage />}>
               <Route index element={<AdminDashboardOverview />} />
-              <Route path="professors" element={<AdminProfessors />} />
+              <Route path="students" element={<AdminStudents />} />
+              <Route path="teachers" element={<AdminTeachers />} />
               <Route path="languages" element={<AdminLanguages />} />
               <Route path="users" element={<AdminUsers />} />
-              <Route path="courses" element={<AdminCourses />} />
+              <Route path="programs" element={<AdminPrograms />} />
               <Route path="quizzes" element={<AdminQuizzes />} />
+              <Route path="live-sessions" element={<AdminLiveSessions />} />
               <Route path="student-approval" element={<AdminStudentApproval />} />
               <Route path="settings" element={<AdminSettings />} />
-              <Route path="add-user" element={<AddUserPage />} />
-              <Route path="add-course" element={<AddCoursePage />} />
-              <Route path="edit-user/:id" element={<EditUserPage />} />
-              <Route path="edit-course/:id" element={<EditCoursePage />} />
-              <Route path="edit-professor/:id" element={<EditProfessorPage />} />
-              <Route path="edit-language/:id" element={<EditLanguagePage />} />
             </Route>
             
             {/* 404 route */}

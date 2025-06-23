@@ -14,7 +14,6 @@ class LiveSessionsController extends Controller
     public function index(Request $request): JsonResponse
     {
         $query = LiveSessions::with(['program.language', 'teacher'])
-                            ->upcoming()
                             ->orderBy('scheduled_at');
 
         // Filter by program if specified
@@ -32,6 +31,15 @@ class LiveSessionsController extends Controller
         // Filter by teacher (for teacher dashboard)
         if ($request->filled('teacher_id')) {
             $query->where('teacher_id', $request->teacher_id);
+        }
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
         }
 
         $sessions = $query->paginate(10);
@@ -61,14 +69,15 @@ class LiveSessionsController extends Controller
     {
         $user = $request->user();
         
-        if (!$user->is_teacher) {
-            return response()->json(['message' => 'Only teachers can create sessions'], 403);
+        if (!$user->is_teacher && !$user->is_admin) {
+            return response()->json(['message' => 'Only teachers and admins can create sessions'], 403);
         }
 
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'sometimes|string',
             'program_id' => 'required|exists:programs,id',
+            'teacher_id' => 'sometimes|exists:users,id',
             'scheduled_at' => 'required|date|after:now',
             'duration_minutes' => 'required|integer|min:15|max:480',
             'meeting_url' => 'sometimes|url',
@@ -77,15 +86,22 @@ class LiveSessionsController extends Controller
             'max_participants' => 'required|integer|min:1|max:500',
         ]);
 
-        // Verify teacher owns the program
-        $program = \App\Models\Programs::findOrFail($request->program_id);
-        if ($program->teacher_id !== $user->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+        // If admin is creating, they can specify teacher_id, otherwise use current user
+        $teacherId = $user->is_admin && $request->filled('teacher_id') 
+                    ? $request->teacher_id 
+                    : $user->id;
+
+        // Verify teacher owns the program (if not admin)
+        if (!$user->is_admin) {
+            $program = \App\Models\Programs::findOrFail($request->program_id);
+            if ($program->teacher_id !== $user->id) {
+                return response()->json(['message' => 'Unauthorized'], 403);
+            }
         }
 
         $session = LiveSessions::create([
             ...$request->validated(),
-            'teacher_id' => $user->id,
+            'teacher_id' => $teacherId,
         ]);
 
         return response()->json([
