@@ -69,6 +69,7 @@ const RegistrationForm = () => {
       navigate("/");
     },
     onError: (error: any) => {
+      console.log('error',error)
       toast({
         title: t('notifications.error'),
         description: error.response?.data?.message || t('notifications.tryAgain'),

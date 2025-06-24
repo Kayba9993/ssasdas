@@ -64,7 +64,7 @@ export const updateProfile = async (profileData: any): Promise<ApiResponse<User>
 
 // Language APIs
 export const fetchLanguages = async (): Promise<Language[]> => {
-  const response = await axios.get('/admin/languages');
+  const response = await axios.get('/languages');
   return response.data.data;
 };
 

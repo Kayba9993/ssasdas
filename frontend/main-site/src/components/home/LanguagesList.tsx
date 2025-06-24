@@ -13,6 +13,7 @@ const LanguagesList = () => {
     queryKey: ['languages'],
     queryFn: fetchLanguages
   });
+  console.log("data languages",languages)
   
   if (isLoading) {
     return (
