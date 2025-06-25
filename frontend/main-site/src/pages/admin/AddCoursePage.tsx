@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,6 +37,10 @@ const formSchema = z.object({
 const AddCoursePage = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "إضافة دورة جديدة - لوحة التحكم - أكاديمية اللغات";
+  }, []);
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,7 +56,6 @@ const AddCoursePage = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Here you would typically make an API call to create the course
     console.log(values);
     
     toast({
@@ -61,11 +63,9 @@ const AddCoursePage = () => {
       description: `تم إضافة دورة ${values.title} إلى قائمة الدورات`,
     });
 
-    // Navigate back to courses list after successful creation
     navigate("/admin/courses");
   }
 
-  // Dummy data for selections
   const languages = [
     { id: "english", name: "الإنجليزية" },
     { id: "french", name: "الفرنسية" },

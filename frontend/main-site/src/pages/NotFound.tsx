@@ -1,4 +1,3 @@
-
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -12,11 +11,12 @@ const NotFound = () => {
   const { t, dir } = useLanguage();
 
   useEffect(() => {
+    document.title = `${t('404.title')} - ${t('404.message')} - أكاديمية اللغات`;
     console.error(
       "404 Error: User attempted to access non-existent route:",
       location.pathname
     );
-  }, [location.pathname]);
+  }, [location.pathname, t]);
 
   return (
     <div>

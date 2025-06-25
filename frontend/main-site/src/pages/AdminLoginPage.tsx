@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,10 @@ const AdminLoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    document.title = "تسجيل الدخول للوحة التحكم - أكاديمية اللغات";
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +37,6 @@ const AdminLoginPage = () => {
     try {
       const response = await adminLogin({ email, password });
       
-      // Store authentication token
       localStorage.setItem("auth_token", response.data.token);
       localStorage.setItem("adminAuthenticated", "true");
       localStorage.setItem("user", JSON.stringify(response.data.user));

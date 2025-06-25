@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,6 +26,10 @@ const formSchema = z.object({
 const AddUserPage = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "إضافة مستخدم جديد - لوحة التحكم - أكاديمية اللغات";
+  }, []);
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,7 +42,6 @@ const AddUserPage = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Here you would typically make an API call to create the user
     console.log(values);
     
     toast({
@@ -47,7 +49,6 @@ const AddUserPage = () => {
       description: `تم إضافة ${values.name} إلى قائمة المستخدمين`,
     });
 
-    // Navigate back to users list after successful creation
     navigate("/admin/users");
   }
 

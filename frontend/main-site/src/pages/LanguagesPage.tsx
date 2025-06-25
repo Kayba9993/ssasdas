@@ -1,4 +1,4 @@
-
+import { useEffect } from "react";
 import { languages } from "@/data/languages";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -10,6 +10,10 @@ import Footer from "@/components/common/Footer";
 const LanguagesPage = () => {
   const navigate = useNavigate();
   const { t, dir } = useLanguage();
+
+  useEffect(() => {
+    document.title = `${t('languages.pageTitle')} - أكاديمية اللغات`;
+  }, [t]);
   
   return (
     <div>
