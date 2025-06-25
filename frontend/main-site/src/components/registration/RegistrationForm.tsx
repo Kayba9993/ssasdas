@@ -39,7 +39,7 @@ const formSchema = z.object({
 const RegistrationForm = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t,dir } = useLanguage();
 
   const { data: languages, isLoading: languagesLoading } = useQuery({
     queryKey: ['languages'],
@@ -93,24 +93,32 @@ const RegistrationForm = () => {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle className="rtl text-2xl font-bold text-center">
-          {t('register.form.title')}
+        <CardTitle className={" text-2xl font-bold text-center" + ` ${dir}`}>
+          {t("register.form.title")}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 rtl">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className={"space-y-6 " + ` ${dir}`}
+          >
             {/* Personal Information Section */}
-            <h3 className="text-xl font-semibold mb-4">{t('register.form.personalInfo')}</h3>
-            
+            <h3 className="text-xl font-semibold mb-4">
+              {t("register.form.personalInfo")}
+            </h3>
+
             <FormField
               control={form.control}
               name="fullName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('form.fullName')}</FormLabel>
+                  <FormLabel>{t("form.fullName")}</FormLabel>
                   <FormControl>
-                    <Input placeholder={t('form.fullNamePlaceholder')} {...field} />
+                    <Input
+                      placeholder={t("form.fullNamePlaceholder")}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -122,9 +130,13 @@ const RegistrationForm = () => {
               name="age"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('form.age')}</FormLabel>
+                  <FormLabel>{t("form.age")}</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder={t('form.agePlaceholder')} {...field} />
+                    <Input
+                      type="number"
+                      placeholder={t("form.agePlaceholder")}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -136,11 +148,11 @@ const RegistrationForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('form.email')}</FormLabel>
+                  <FormLabel>{t("form.email")}</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder={t('form.emailPlaceholder')}
+                      placeholder={t("form.emailPlaceholder")}
                       {...field}
                     />
                   </FormControl>
@@ -154,9 +166,12 @@ const RegistrationForm = () => {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('form.phone')}</FormLabel>
+                  <FormLabel>{t("form.phone")}</FormLabel>
                   <FormControl>
-                    <Input placeholder={t('form.phonePlaceholder')} {...field} />
+                    <Input
+                      placeholder={t("form.phonePlaceholder")}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -165,7 +180,9 @@ const RegistrationForm = () => {
 
             {/* Course Information Section */}
             <div className="border-t pt-6 mt-6">
-              <h3 className="text-xl font-semibold mb-4">{t('register.form.courseInfo')}</h3>
+              <h3 className="text-xl font-semibold mb-4">
+                {t("register.form.courseInfo")}
+              </h3>
             </div>
 
             <FormField
@@ -173,20 +190,28 @@ const RegistrationForm = () => {
               name="level"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('form.selectLevel')}</FormLabel>
+                  <FormLabel>{t("form.selectLevel")}</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder={t('form.chooseLevelPlaceholder')} />
+                        <SelectValue
+                          placeholder={t("form.chooseLevelPlaceholder")}
+                        />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="beginner">{t('level.beginner')}</SelectItem>
-                      <SelectItem value="intermediate">{t('level.intermediate')}</SelectItem>
-                      <SelectItem value="advanced">{t('level.advanced')}</SelectItem>
+                      <SelectItem value="beginner">
+                        {t("level.beginner")}
+                      </SelectItem>
+                      <SelectItem value="intermediate">
+                        {t("level.intermediate")}
+                      </SelectItem>
+                      <SelectItem value="advanced">
+                        {t("level.advanced")}
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -199,19 +224,23 @@ const RegistrationForm = () => {
               name="language"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('form.selectLanguage')}</FormLabel>
+                  <FormLabel>{t("form.selectLanguage")}</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder={t('form.chooseLanguagePlaceholder')} />
+                        <SelectValue
+                          placeholder={t("form.chooseLanguagePlaceholder")}
+                        />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {languagesLoading ? (
-                        <SelectItem value="loading" disabled>Loading...</SelectItem>
+                        <SelectItem value="loading" disabled>
+                          Loading...
+                        </SelectItem>
                       ) : (
                         languages?.map((language: any) => (
                           <SelectItem key={language.id} value={language.name}>
@@ -231,20 +260,28 @@ const RegistrationForm = () => {
               name="classType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('form.selectSubscription')}</FormLabel>
+                  <FormLabel>{t("form.selectSubscription")}</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder={t('form.chooseSubscriptionPlaceholder')} />
+                        <SelectValue
+                          placeholder={t("form.chooseSubscriptionPlaceholder")}
+                        />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="individual">{t('subscription.individual')}</SelectItem>
-                      <SelectItem value="group">{t('subscription.group')}</SelectItem>
-                      <SelectItem value="online">{t('subscription.online')}</SelectItem>
+                      <SelectItem value="individual">
+                        {t("subscription.individual")}
+                      </SelectItem>
+                      <SelectItem value="group">
+                        {t("subscription.group")}
+                      </SelectItem>
+                      <SelectItem value="online">
+                        {t("subscription.online")}
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -257,7 +294,9 @@ const RegistrationForm = () => {
               className="w-full bg-academy-green hover:bg-opacity-90"
               disabled={registerMutation.isPending}
             >
-              {registerMutation.isPending ? t('button.registering') : t('button.submitRegistration')}
+              {registerMutation.isPending
+                ? t("button.registering")
+                : t("button.submitRegistration")}
             </Button>
           </form>
         </Form>
