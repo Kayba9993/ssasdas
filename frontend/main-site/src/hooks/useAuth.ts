@@ -15,6 +15,7 @@ export const useAuth = () => {
       localStorage.setItem('auth_token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
       localStorage.setItem('adminAuthenticated', 'true');
+      navigate('/admin')
       
       toast({
         title: "تم تسجيل الدخول بنجاح",

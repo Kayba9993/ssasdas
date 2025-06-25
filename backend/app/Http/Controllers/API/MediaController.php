@@ -41,7 +41,7 @@ class MediaController extends Controller
         $path = $type . 's/' . $filename;
 
         // Store file
-        $file->storeAs('public/' . $type . 's', $filename);
+        $file->storeAs('app/public/' . $type . 's', $filename);
 
         // Create media asset record
         $mediaAsset = MediaAssets::create([

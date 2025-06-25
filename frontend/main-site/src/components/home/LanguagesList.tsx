@@ -13,7 +13,6 @@ const LanguagesList = () => {
     queryKey: ['languages'],
     queryFn: fetchLanguages
   });
-  console.log("data languages",languages)
   
   if (isLoading) {
     return (
@@ -51,37 +50,43 @@ const LanguagesList = () => {
   return (
     <div className="py-16 bg-gray-50" dir={dir}>
       <div className="container mx-auto px-4">
-        <h2 className={`text-3xl font-bold text-center mb-12 text-academy-green ${dir === 'rtl' ? 'rtl' : 'ltr'}`}>
-          {t('languages.title')}
+        <h2
+          className={`text-3xl font-bold text-center mb-12 text-academy-green `}
+        >
+          {t("languages.title")}
         </h2>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+
+        <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {languages?.map((language) => (
             <Card key={language.id} className="transition-all hover:shadow-lg">
               <CardContent className="p-6 text-center">
-                <div className="text-5xl mb-4">
-                  {language.icon}
-                </div>
-                <h3 className={`text-xl font-bold mb-2 ${dir === 'rtl' ? 'rtl' : 'ltr'}`}>{language.name}</h3>
+                <div className="text-5xl mb-4">{language.icon}</div>
+                <h3
+                  className={`text-xl font-bold mb-2 ${
+                    dir === "rtl" ? "rtl" : "ltr"
+                  }`}
+                >
+                  {dir === "rtl" ? language.name : language.nativeName}
+                </h3>
                 <p className="text-gray-500 mb-4">{language.description}</p>
-                <Button 
+                <Button
                   variant="outline"
                   className="w-full border-academy-green text-academy-green hover:bg-academy-green hover:text-white"
-                  onClick={() => navigate('/register')}
+                  onClick={() => navigate("/register")}
                 >
-                  {t('button.register')}
+                  {t("button.register")}
                 </Button>
               </CardContent>
             </Card>
           ))}
         </div>
-        
+
         <div className="mt-12 text-center">
-          <Button 
+          <Button
             className="bg-academy-green hover:bg-opacity-90 px-8"
-            onClick={() => navigate('/register')}
+            onClick={() => navigate("/register")}
           >
-            {t('languages.registerCourse')}
+            {t("languages.registerCourse")}
           </Button>
         </div>
       </div>

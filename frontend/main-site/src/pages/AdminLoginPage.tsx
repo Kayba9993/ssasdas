@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-=======
+
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
->>>>>>> 32f1840136bf3fb369be22127ba2257b207e92b8
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -28,32 +24,8 @@ const AdminLoginPage = () => {
       return;
     }
     
-<<<<<<< HEAD
     adminLogin({ email, password });
-=======
-    try {
-      const response = await adminLogin({ email, password });
-      
-      localStorage.setItem("auth_token", response.data.token);
-      localStorage.setItem("adminAuthenticated", "true");
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      
-      toast({
-        title: "تم تسجيل الدخول بنجاح",
-        description: "مرحباً بك في لوحة التحكم"
-      });
-      
-      navigate("/admin");
-    } catch (error: any) {
-      toast({
-        title: "خطأ في تسجيل الدخول",
-        description: error.message || "بريد إلكتروني أو كلمة مرور غير صحيحة",
-        variant: "destructive"
-      });
-    } finally {
-      setIsLoading(false);
-    }
->>>>>>> 32f1840136bf3fb369be22127ba2257b207e92b8
+
   };
 
   return (
