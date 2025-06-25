@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "@/components/admin/AdminSidebar";
@@ -9,7 +8,8 @@ const AdminDashboardPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if admin is authenticated
+    document.title = "لوحة التحكم - أكاديمية اللغات";
+    
     const isAuthenticated = localStorage.getItem("adminAuthenticated") === "true";
     
     if (!isAuthenticated) {

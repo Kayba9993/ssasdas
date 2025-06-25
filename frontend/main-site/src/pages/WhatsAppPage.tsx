@@ -1,4 +1,4 @@
-
+import { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import WhatsAppForm from "@/components/whatsapp/WhatsAppForm";
 import NavBar from "@/components/common/NavBar";
@@ -6,6 +6,10 @@ import Footer from "@/components/common/Footer";
 
 const WhatsAppPage = () => {
   const { t, dir } = useLanguage();
+
+  useEffect(() => {
+    document.title = `${t('whatsapp.title')} - أكاديمية اللغات`;
+  }, [t]);
 
   return (
     <div>

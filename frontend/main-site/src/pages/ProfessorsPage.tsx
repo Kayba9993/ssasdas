@@ -1,4 +1,4 @@
-
+import { useEffect } from "react";
 import { professors } from "@/data/professors";
 import { useLanguage } from "@/contexts/LanguageContext";
 import ProfessorCard from "@/components/professors/ProfessorCard";
@@ -7,6 +7,10 @@ import Footer from "@/components/common/Footer";
 
 const ProfessorsPage = () => {
   const { t, dir } = useLanguage();
+
+  useEffect(() => {
+    document.title = `${t('professors.title')} - أكاديمية اللغات`;
+  }, [t]);
 
   return (
     <div>

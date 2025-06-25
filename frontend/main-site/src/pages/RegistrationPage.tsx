@@ -1,4 +1,4 @@
-
+import { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import RegistrationForm from "@/components/registration/RegistrationForm";
 import BankTransferInfo from "@/components/registration/BankTransferInfo";
@@ -8,6 +8,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const RegistrationPage = () => {
   const { t, dir } = useLanguage();
+
+  useEffect(() => {
+    document.title = `${t('register.title')} - أكاديمية اللغات`;
+  }, [t]);
 
   return (
     <div>
