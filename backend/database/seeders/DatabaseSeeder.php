@@ -19,16 +19,16 @@ class DatabaseSeeder extends Seeder
         // Create admin user
         $admin = User::create([
             'name' => 'System Administrator',
-            'email' => 'admin@example.com',
+            'email' => 'zakariiptv90@gmail.com',
             'password' => Hash::make('admin123'),
             'role' => 'admin',
         ]);
 
         // Create sample teacher
         $teacherUser = User::create([
-            'name' => 'Sarah Johnson',
-            'email' => 'sarah@languageapp.com',
-            'password' => Hash::make('password'),
+            'name' => 'Ouakid Fatima Ezzahra',
+            'email' => 'fatimaezzahraouakid@gmail.com.com',
+            'password' => Hash::make('fatimaezzapassword'),
             'role' => 'teacher',
         ]);
 
@@ -37,31 +37,32 @@ class DatabaseSeeder extends Seeder
             'employee_id' => 'TEACH001',
             'department' => 'Language Studies',
             'bio' => 'Experienced language instructor with 10+ years of teaching.',
-            'specializations' => ['Spanish', 'Italian'],
+            'specializations' => ['English'],
             'years_experience' => 10,
             'qualification' => 'PhD in Linguistics',
-            'phone' => '+212612345678',
+            'phone' => '+2127 71 09 06 52',
             'hourly_rate' => 50.00,
             'is_available' => true,
         ]);
+        $teacherUser = User::create([
+            'name' => 'Faridi mohamed',
+            'email' => 'fatimaezzahraouakid@gmail.com.com',
+            'password' => Hash::make('fatimaezzapassword'),
+            'role' => 'teacher',
+        ]);
 
-        // // Create sample student
-        // $studentUser = User::create([
-        //     'name' => 'John Doe',
-        //     'email' => 'john@example.com',
-        //     'password' => Hash::make('password'),
-        //     'role' => 'student',
-        // ]);
-
-        // $student = Student::create([
-        //     'user_id' => $studentUser->id,
-        //     'student_id' => 'STU001',
-        //     'level' => 'beginner',
-        //     'skills' => ['listening', 'reading'],
-        //     'phone' => '+212612345679',
-        //     'learning_goals' => 'Improve conversational skills',
-        //     'preferred_schedule' => ['evening', 'weekend'],
-        // ]);
+        $teacher = Teacher::create([
+            'user_id' => $teacherUser->id,
+            'employee_id' => 'TEACH002',
+            'department' => 'Language Studies',
+            'bio' => 'Experienced language instructor with 10+ years of teaching.',
+            'specializations' => ['Spanish'],
+            'years_experience' => 10,
+            'qualification' => 'PhD in Linguistics',
+            'phone' => '+2127 71 09 06 52',
+            'hourly_rate' => 50.00,
+            'is_available' => true,
+        ]);
 
         // Create languages
         $languages = [

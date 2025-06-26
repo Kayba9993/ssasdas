@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\UserRegistered;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Student;
@@ -67,6 +68,7 @@ class AuthController extends Controller
                     'level' => $request->level
                 ]
             ]);
+            UserRegistered::dispatch($user);
 
             DB::commit();
 
