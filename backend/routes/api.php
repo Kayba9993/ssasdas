@@ -31,6 +31,7 @@ Route::prefix('v1')->group(function () {
     // Public resource routes
     Route::apiResource('programs', ProgramsController::class)->only(['index', 'show']);
     Route::apiResource('languages', LanguagesController::class)->only(['index', 'show']);
+    Route::apiResource('users', UserController::class)->only(['index', 'show']);
     Route::get('live-sessions', [LiveSessionsController::class, 'index']);
     Route::get('live-sessions/{id}', [LiveSessionsController::class, 'show']);
     Route::prefix('media')->group(function () {

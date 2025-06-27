@@ -6,6 +6,7 @@ import LanguagesList from "@/components/home/LanguagesList";
 import Testimonials from "@/components/home/Testimonials";
 import NavBar from "@/components/common/NavBar";
 import Footer from "@/components/common/Footer";
+import Teachers from "@/components/home/Teachers";
 
 const Index = () => {
   const { t } = useLanguage();
@@ -20,6 +21,7 @@ const Index = () => {
       <Hero />
       <Features />
       <LanguagesList />
+      <Teachers />
       <Testimonials />
       <Footer />
     </div>

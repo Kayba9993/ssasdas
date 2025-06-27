@@ -158,7 +158,7 @@ export const rejectStudent = async (userId: string, reason: string): Promise<Api
 
 // User management APIs
 export const fetchUsers = async (params?: any): Promise<PaginatedResponse<User>> => {
-  const response = await axios.get('/admin/users', { params });
+  const response = await axios.get('/users', { params });
   return response.data;
 };
 

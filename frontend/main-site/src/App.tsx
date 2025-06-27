@@ -7,6 +7,8 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import Index from "./pages/Index";
 import ProfessorsPage from "./pages/ProfessorsPage";
 import ProfessorDetailPage from "./pages/ProfessorDetailPage";
+import TeachersPage from "./pages/TeachersPage";
+import TeacherDetailPage from "./pages/TeacherDetailPage";
 import LanguagesPage from "./pages/LanguagesPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import WhatsAppPage from "./pages/WhatsAppPage";
@@ -39,16 +41,18 @@ const App = () => (
           <Routes>
             {/* Main site routes */}
             <Route path="/" element={<Index />} />
-            <Route path="/professors" element={<ProfessorsPage />} />
-            <Route path="/professors/:id" element={<ProfessorDetailPage />} />
+            {/* <Route path="/professors" element={<ProfessorsPage />} />
+            <Route path="/professors/:id" element={<ProfessorDetailPage />} /> */}
+            <Route path="/professors" element={<TeachersPage />} />
+            <Route path="/professors/:id" element={<TeacherDetailPage />} />
             <Route path="/languages" element={<LanguagesPage />} />
             <Route path="/register" element={<RegistrationPage />} />
             <Route path="/whatsapp" element={<WhatsAppPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            
+
             {/* Admin login route */}
             <Route path="/admin/login" element={<AdminLoginPage />} />
-            
+
             {/* Admin routes */}
             <Route path="/admin" element={<AdminDashboardPage />}>
               <Route index element={<AdminDashboardOverview />} />
@@ -59,10 +63,13 @@ const App = () => (
               <Route path="programs" element={<AdminPrograms />} />
               <Route path="quizzes" element={<AdminQuizzes />} />
               <Route path="live-sessions" element={<AdminLiveSessions />} />
-              <Route path="student-approval" element={<AdminStudentApproval />} />
+              <Route
+                path="student-approval"
+                element={<AdminStudentApproval />}
+              />
               <Route path="settings" element={<AdminSettings />} />
             </Route>
-            
+
             {/* 404 route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
