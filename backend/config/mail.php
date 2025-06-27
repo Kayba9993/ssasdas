@@ -115,4 +115,15 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Email Configuration
+    |--------------------------------------------------------------------------
+    |
+    | This email address will be used for admin notifications and reports.
+    |
+    */
+
+    'admin_email' => env('ADMIN_EMAIL', 'zakariiptv90@gmail.com'),
+
 ];

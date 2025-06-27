@@ -33,6 +33,12 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('languages', LanguagesController::class)->only(['index', 'show']);
     Route::get('live-sessions', [LiveSessionsController::class, 'index']);
     Route::get('live-sessions/{id}', [LiveSessionsController::class, 'show']);
+    Route::prefix('media')->group(function () {
+        Route::get('/', [MediaController::class, 'index']);
+        Route::post('upload', [MediaController::class, 'upload']);
+        Route::get('{id}', [MediaController::class, 'show']);
+        Route::delete('{id}', [MediaController::class, 'destroy']);
+    });
 });
 
 // Protected routes
@@ -52,12 +58,6 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     });
     
     // Media management
-    Route::prefix('media')->group(function () {
-        Route::get('/', [MediaController::class, 'index']);
-        Route::post('upload', [MediaController::class, 'upload']);
-        Route::get('{id}', [MediaController::class, 'show']);
-        Route::delete('{id}', [MediaController::class, 'destroy']);
-    });
     
     // Student routes
     Route::middleware('role:student')->group(function () {
