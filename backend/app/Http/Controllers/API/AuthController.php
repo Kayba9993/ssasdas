@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Events\UserRegistered;
 use App\Http\Controllers\Controller;
+use App\Mail\NewUserRegistered;
 use App\Models\User;
 use App\Models\Student;
 use App\Models\Teacher;
@@ -11,12 +12,18 @@ use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
+    public function test_email(){
+        $user=User::all()->first();
+        UserRegistered::dispatch($user);
+        return response()->json(["message"=>"send successfully"],200);
+    }
     public function register(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -69,6 +76,7 @@ class AuthController extends Controller
                 ]
             ]);
             UserRegistered::dispatch($user);
+
 
             DB::commit();
 

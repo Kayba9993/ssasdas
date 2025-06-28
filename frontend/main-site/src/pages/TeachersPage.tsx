@@ -104,10 +104,10 @@ const TeachersPage = () => {
                     : "خبرة واسعة في التدريس"}
                 </p>
                 <Button
-                  onClick={() => navigate(`/teachers/${teacher.id}`)}
+                  onClick={() => navigate(`/professors/${teacher.id}`)}
                   className="w-full bg-academy-green hover:bg-opacity-90"
                 >
-                  {t("teachers.meetButton")}
+                  {t("professors.meetButton")}
                 </Button>
               </CardContent>
             </Card>

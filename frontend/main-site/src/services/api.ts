@@ -163,7 +163,7 @@ export const fetchUsers = async (params?: any): Promise<PaginatedResponse<User>>
 };
 
 export const fetchUserById = async (id: string): Promise<ApiResponse<User>> => {
-  const response = await axios.get(`/admin/users/${id}`);
+  const response = await axios.get(`/users/${id}`);
   return response.data;
 };
 

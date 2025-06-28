@@ -35,6 +35,7 @@ class User extends Authenticatable
         'is_active' => 'boolean',
     ];
 
+    
     // Relationships
     public function student(): HasOne
     {
@@ -67,29 +68,35 @@ class User extends Authenticatable
     }
 
     // Scopes
+    public function getRoleAttribute($value): string
+    {
+        return $value ?? 'student';
+    }
+
+    public function getStatusAttribute($value): string
+    {
+        return $value ?? 'active';
+    }
+
+    // Scopes
+    public function scopeStudents($query)
+    {
+        return $query->where('role', 'student');
+    }
+
     public function scopeActive($query)
     {
-        return $query->where('is_active', true);
+        return $query->where('status', 'active');
     }
 
-    public function scopeByRole($query, $role)
-    {
-        return $query->where('role', $role);
-    }
-
-    // Accessors
-    public function getIsStudentAttribute(): bool
-    {
-        return $this->role === 'student';
-    }
-
-    public function getIsTeacherAttribute(): bool
-    {
-        return $this->role === 'teacher';
-    }
-
-    public function getIsAdminAttribute(): bool
+    // Helper methods
+    public function isAdmin(): bool
     {
         return $this->role === 'admin';
+    }
+
+    public function isStudent(): bool
+    {
+        return $this->role === 'student';
     }
 }

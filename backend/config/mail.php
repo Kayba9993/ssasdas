@@ -39,7 +39,6 @@ return [
 
         'smtp' => [
             'transport' => 'smtp',
-            'scheme' => env('MAIL_SCHEME'),
             'url' => env('MAIL_URL'),
             'host' => env('MAIL_HOST', '127.0.0.1'),
             'port' => env('MAIL_PORT', 2525),
@@ -124,6 +123,6 @@ return [
     |
     */
 
-    'admin_email' => env('ADMIN_EMAIL', 'zakariiptv90@gmail.com'),
+    'admin_email' => env('ADMIN_EMAIL', 'hikatsukayba@gmail.com'),
 
 ];

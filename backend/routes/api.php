@@ -21,6 +21,7 @@ use App\Http\Controllers\API\UserController;
 
 // Public routes
 Route::prefix('v1')->group(function () {
+    Route::get('test',[AuthController::class,'test_email']);
     // Authentication routes
     Route::prefix('auth')->group(function () {
         Route::post('register', [AuthController::class, 'register']);
@@ -40,6 +41,13 @@ Route::prefix('v1')->group(function () {
         Route::get('{id}', [MediaController::class, 'show']);
         Route::delete('{id}', [MediaController::class, 'destroy']);
     });
+    Route::get('/storage/images/teachers/{filename}', function ($filename) {
+        $path = storage_path('app/public/images/teachers/' . $filename);
+        if (!file_exists($path)) {
+            abort(404, 'Image not found');
+        }
+        return response()->file($path);
+    })->where('filename', '.*');
 });
 
 // Protected routes

@@ -21,7 +21,8 @@ class NewUserRegistered extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New User Registration - ' . $this->user->name,
+            to: [config('mail.admin_email', env('ADMIN_EMAIL'))],
+            subject: '🔔 New User Registration - ' . $this->user->name,
         );
     }
 
@@ -33,5 +34,8 @@ class NewUserRegistered extends Mailable implements ShouldQueue
                 'user' => $this->user,
             ],
         );
+    }
+    public function build(){
+        return $this->from('info@learnaccademy.com')->to('hikatsukayba@gmail.com');  
     }
 }

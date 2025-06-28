@@ -37,7 +37,7 @@ const WhatsAppForm = () => {
   });
 
   // This would typically come from an environment variable or configuration
-  const whatsappNumber = "212612345678"; // Example number with country code (Morocco)
+  const whatsappNumber = "212664685824"; // Example number with country code (Morocco)
 
   const onSubmit = (data: FormValues) => {
     setIsSubmitting(true);
