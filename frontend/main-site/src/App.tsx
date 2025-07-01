@@ -16,6 +16,12 @@ import NotFound from "./pages/NotFound";
 import AdminLoginPage from "./pages/AdminLoginPage";
 
 // Admin pages
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import QuizManagement from "./pages/admin/QuizManagement";
+import CreateQuiz from "./pages/admin/CreateQuiz";
+import QuizQuestions from "./pages/admin/QuizQuestions";
+import StudentsManagement from "./pages/admin/StudentsManagement";
+
 import WhatsAppFloatButton from "./components/home/FloatButtonWhatsapp";
 
 const queryClient = new QueryClient();
@@ -31,8 +37,6 @@ const App = () => (
           <Routes>
             {/* Main site routes */}
             <Route path="/" element={<Index />} />
-            {/* <Route path="/professors" element={<ProfessorsPage />} />
-            <Route path="/professors/:id" element={<ProfessorDetailPage />} /> */}
             <Route path="/professors" element={<TeachersPage />} />
             <Route path="/professors/:id" element={<TeacherDetailPage />} />
             <Route path="/languages" element={<LanguagesPage />} />
@@ -43,7 +47,12 @@ const App = () => (
             {/* Admin login route */}
             <Route path="/admin/login" element={<AdminLoginPage />} />
 
-            
+            {/* Admin dashboard routes */}
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/quizzes" element={<QuizManagement />} />
+            <Route path="/admin/quizzes/create" element={<CreateQuiz />} />
+            <Route path="/admin/quizzes/:quizId/questions" element={<QuizQuestions />} />
+            <Route path="/admin/students" element={<StudentsManagement />} />
 
             {/* 404 route */}
             <Route path="*" element={<NotFound />} />

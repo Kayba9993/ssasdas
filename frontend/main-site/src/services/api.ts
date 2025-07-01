@@ -42,8 +42,7 @@ export const loginUser = async (credentials: { email: string; password: string }
 };
 
 export const adminLogin = async (credentials: { email: string; password: string }): Promise<ApiResponse<{ user: User; token: string }>> => {
-  const response = await axios.post('/auth/login', credentials);
-  console.log("data fetch",response)
+  const response = await axios.post('/auth/admin-login', credentials);
   return response.data;
 };
 
@@ -116,7 +115,7 @@ export const deleteProgram = async (id: string): Promise<ApiResponse<any>> => {
 
 // Quiz APIs
 export const fetchQuizzes = async (params?: any): Promise<PaginatedResponse<any>> => {
-  const response = await axios.get('/admin/quizzes', { params });
+  const response = await axios.get('/teacher/quizzes', { params });
   return response.data;
 };
 
@@ -126,17 +125,17 @@ export const fetchQuizById = async (id: string): Promise<ApiResponse<any>> => {
 };
 
 export const createQuiz = async (quizData: any): Promise<ApiResponse<any>> => {
-  const response = await axios.post('/admin/quizzes', quizData);
+  const response = await axios.post('/teacher/quizzes', quizData);
   return response.data;
 };
 
 export const updateQuiz = async (id: string, quizData: any): Promise<ApiResponse<any>> => {
-  const response = await axios.put(`/admin/quizzes/${id}`, quizData);
+  const response = await axios.put(`/teacher/quizzes/${id}`, quizData);
   return response.data;
 };
 
 export const deleteQuiz = async (id: string): Promise<ApiResponse<any>> => {
-  const response = await axios.delete(`/admin/quizzes/${id}`);
+  const response = await axios.delete(`/teacher/quizzes/${id}`);
   return response.data;
 };
 
