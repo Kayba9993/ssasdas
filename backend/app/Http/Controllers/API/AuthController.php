@@ -21,7 +21,11 @@ class AuthController extends Controller
 {
     public function test_email(){
         $user=User::all()->first();
-        UserRegistered::dispatch($user);
+        try {
+            Mail::send(new NewUserRegistered($user));
+        } catch (\Exception $e) {
+            Log::error('Failed to send admin notification: ' . $e->getMessage());
+        }
         return response()->json(["message"=>"send successfully"],200);
     }
     public function register(Request $request): JsonResponse
@@ -75,7 +79,7 @@ class AuthController extends Controller
                     'level' => $request->level
                 ]
             ]);
-            UserRegistered::dispatch($user);
+            Mail::send(new NewUserRegistered($user));
 
 
             DB::commit();

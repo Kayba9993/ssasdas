@@ -1,6 +1,5 @@
-
 import { Link } from "react-router-dom";
-import { useLanguage } from "@/contexts/LanguageContext"; 
+import { useLanguage } from "@/contexts/LanguageContext";
 import Logo from "./Logo";
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 
@@ -9,15 +8,15 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={"bg-gray-100 py-12" + ` ${dir}`} dir={dir}>
+    <footer className="bg-gray-100 py-12" dir={dir}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className={`${dir}`}>
+          <div className={dir === "rtl" ? "text-right" : "text-left"}>
             <Logo />
             <p className="mt-4 text-gray-600">{t("footer.description")}</p>
           </div>
 
-          <div className={`${dir}`}>
+          <div className={dir === "rtl" ? "text-right" : "text-left"}>
             <h3 className="text-lg font-bold mb-4">{t("footer.quickLinks")}</h3>
             <ul className="space-y-2">
               <li>
@@ -52,22 +51,26 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className={`${dir}`}>
+          <div className={dir === "rtl" ? "text-right" : "text-left"}>
             <h3 className="text-lg font-bold mb-4">{t("footer.contactUs")}</h3>
             <p className="text-gray-600 mb-4">
               {t("contact.email")}: info@learnacademy.com
             </p>
             <p className="text-gray-600 mb-4">
-              {t("contact.phone")}: +212 612 345 678
+              {t("contact.phone")}: <span dir="ltr">+212 664-685824</span>
             </p>
-            <div className="flex space-x-4">
+
+            <div className="flex gap-4 justify-start">
               <a href="#" className="text-gray-600 hover:text-academy-green">
                 <Facebook size={20} />
               </a>
               <a href="#" className="text-gray-600 hover:text-academy-green">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-gray-600 hover:text-academy-green">
+              <a
+                href="https://www.instagram.com/learnaccademy?igsh=MW8yODQybXBzbnJqZQ=="
+                className="text-gray-600 hover:text-academy-green"
+              >
                 <Instagram size={20} />
               </a>
               <a href="#" className="text-gray-600 hover:text-academy-green">
@@ -77,7 +80,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-gray-200 text-center rtl">
+        <div className="mt-8 pt-8 border-t border-gray-200 text-center">
           <p className="text-gray-600">
             {t("footer.copyright").replace("{year}", currentYear.toString())}
           </p>

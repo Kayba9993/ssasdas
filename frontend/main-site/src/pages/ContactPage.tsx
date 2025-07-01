@@ -58,7 +58,9 @@ const ContactPage = () => {
                 </div>
                 <div>
                   <h3 className="font-bold mb-1">{t("contact.phone")}</h3>
-                  <p className="text-gray-600">+212 664-685824</p>
+                  <p className="text-gray-600 mb-4">
+                    {t("contact.phone")}: <span dir="ltr">+212 664-685824</span>
+                  </p>
                 </div>
               </div>
 

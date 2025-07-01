@@ -279,9 +279,6 @@ const RegistrationForm = () => {
                       <SelectItem value="group">
                         {t("subscription.group")}
                       </SelectItem>
-                      <SelectItem value="online">
-                        {t("subscription.online")}
-                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />

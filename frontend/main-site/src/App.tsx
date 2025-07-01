@@ -5,8 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import Index from "./pages/Index";
-import ProfessorsPage from "./pages/ProfessorsPage";
-import ProfessorDetailPage from "./pages/ProfessorDetailPage";
+
 import TeachersPage from "./pages/TeachersPage";
 import TeacherDetailPage from "./pages/TeacherDetailPage";
 import LanguagesPage from "./pages/LanguagesPage";
@@ -17,17 +16,7 @@ import NotFound from "./pages/NotFound";
 import AdminLoginPage from "./pages/AdminLoginPage";
 
 // Admin pages
-import AdminDashboardPage from "./pages/AdminDashboardPage";
-import AdminDashboardOverview from "./components/admin/AdminDashboardOverview";
-import AdminStudents from "./components/admin/AdminStudents";
-import AdminTeachers from "./components/admin/AdminTeachers";
-import AdminLanguages from "./components/admin/AdminLanguages";
-import AdminUsers from "./components/admin/AdminUsers";
-import AdminPrograms from "./components/admin/AdminPrograms";
-import AdminQuizzes from "./components/admin/AdminQuizzes";
-import AdminLiveSessions from "./components/admin/AdminLiveSessions";
-import AdminStudentApproval from "./components/admin/AdminStudentApproval";
-import AdminSettings from "./components/admin/AdminSettings";
+import WhatsAppFloatButton from "./components/home/FloatButtonWhatsapp";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +26,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <WhatsAppFloatButton />
         <BrowserRouter>
           <Routes>
             {/* Main site routes */}
@@ -53,22 +43,7 @@ const App = () => (
             {/* Admin login route */}
             <Route path="/admin/login" element={<AdminLoginPage />} />
 
-            {/* Admin routes */}
-            <Route path="/admin" element={<AdminDashboardPage />}>
-              <Route index element={<AdminDashboardOverview />} />
-              <Route path="students" element={<AdminStudents />} />
-              <Route path="teachers" element={<AdminTeachers />} />
-              <Route path="languages" element={<AdminLanguages />} />
-              <Route path="users" element={<AdminUsers />} />
-              <Route path="programs" element={<AdminPrograms />} />
-              <Route path="quizzes" element={<AdminQuizzes />} />
-              <Route path="live-sessions" element={<AdminLiveSessions />} />
-              <Route
-                path="student-approval"
-                element={<AdminStudentApproval />}
-              />
-              <Route path="settings" element={<AdminSettings />} />
-            </Route>
+            
 
             {/* 404 route */}
             <Route path="*" element={<NotFound />} />

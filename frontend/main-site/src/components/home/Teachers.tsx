@@ -60,7 +60,7 @@ const Teachers = () => {
         <h2
           className={`text-3xl font-bold text-center mb-12 text-academy-green `}
         >
-          {t("teachers.title")}
+          {t("professors.title")}
         </h2>
 
         <div className="flex flex-wrap justify-center gap-6">
@@ -77,9 +77,7 @@ const Teachers = () => {
                 />
               </div>
               <CardContent className="p-6 text-center">
-                <h3
-                  className={`text-xl font-bold mb-2 text-center `}
-                >
+                <h3 className={`text-xl font-bold mb-2 text-center `}>
                   {teacher.name}
                 </h3>
                 <p className="text-academy-green mb-2">
@@ -97,9 +95,9 @@ const Teachers = () => {
                 <Button
                   variant="outline"
                   className="w-full border-academy-green text-academy-green hover:bg-academy-green hover:text-white"
-                  onClick={() => navigate(`/teachers/${teacher.id}`)}
+                  onClick={() => navigate(`/professors/${teacher.id}`)}
                 >
-                  {t("teachers.meetButton")}
+                  {t("professors.meetButton")}
                 </Button>
               </CardContent>
             </Card>
@@ -109,9 +107,9 @@ const Teachers = () => {
         <div className="mt-12 text-center">
           <Button
             className="bg-academy-green hover:bg-opacity-90 px-8"
-            onClick={() => navigate("/teachers")}
+            onClick={() => navigate("/professors")}
           >
-            {t("teachers.viewAll")}
+            {t("professors.viewAll")}
           </Button>
         </div>
       </div>

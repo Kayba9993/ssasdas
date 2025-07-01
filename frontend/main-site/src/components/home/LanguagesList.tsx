@@ -50,6 +50,7 @@ const LanguagesList = () => {
       </div>
     );
   }
+  console.log(languages)
 
   return (
     <div className="py-16 bg-gray-50" dir={dir}>
@@ -77,9 +78,9 @@ const LanguagesList = () => {
                     dir === "rtl" ? "rtl" : "ltr"
                   }`}
                 >
-                  {dir === "rtl" ? language.name : language.nativeName}
+                  {dir === "rtl" ? language.name : language.slug}
                 </h3>
-                <p className="text-gray-500 mb-4">{language.description}</p>
+                {/* <p className="text-gray-500 mb-4">{language.description}</p> */}
                 <Button
                   variant="outline"
                   className="w-full border-academy-green text-academy-green hover:bg-academy-green hover:text-white"

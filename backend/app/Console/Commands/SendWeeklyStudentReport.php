@@ -43,7 +43,7 @@ class SendWeeklyStudentReport extends Command
             $filePath = Storage::disk('local')->path('temp/' . $fileName);
 
             // Send email with CSV attachment
-            $adminEmail = config('mail.admin_email', 'admin@example.com');
+            $adminEmail = config('mail.admin_email', 'hikatsukayba@gmail.com');
             
             Mail::to($adminEmail)->send(new WeeklyStudentReport(
                 $filePath,

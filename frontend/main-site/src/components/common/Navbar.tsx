@@ -25,7 +25,10 @@ const NavBar = () => {
   ];
 
   return (
-    <nav className={`bg-white shadow-md sticky top-0 z-50 ${dir === 'rtl' ? 'text-right' : 'text-left'}`} dir={dir}>
+    <nav
+      className={`bg-white shadow-md sticky top-0 z-50 `}
+      dir={dir}
+    >
       <div className="container mx-auto px-4">
         <div className="flex justify-between h-16 items-center">
           <div className="flex">
@@ -33,18 +36,18 @@ const NavBar = () => {
               <Logo />
             </Link>
           </div>
-          
+
           <div className="hidden md:flex items-center space-x-4 rtl:space-x-reverse">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors
-                  ${
-                    location.pathname === link.path
-                      ? "text-academy-green border-b-2 border-academy-green"
-                      : "text-gray-700 hover:text-academy-green"
-                  }`}
+                onClick={() => setIsOpen(false)}
+                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                  location.pathname === link.path
+                    ? "text-academy-green bg-gray-50"
+                    : "text-gray-700 hover:bg-gray-50 hover:text-academy-green"
+                } ${dir === "rtl" ? "text-right" : "text-left"}`}
               >
                 {link.name}
               </Link>
@@ -54,9 +57,9 @@ const NavBar = () => {
               className="bg-academy-green hover:bg-opacity-90"
               asChild
             >
-              <Link to="/register">{t('button.register')}</Link>
+              <Link to="/register">{t("button.register")}</Link>
             </Button>
-            
+
             {/* Language switcher dropdown */}
             <LanguageSwitcher />
           </div>
@@ -65,7 +68,7 @@ const NavBar = () => {
             <LanguageSwitcher />
             <button
               onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-academy-green focus:outline-none ml-2"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-academy-green focus:outline-none ms-2"
             >
               {isOpen ? <X /> : <Menu />}
             </button>
@@ -98,7 +101,7 @@ const NavBar = () => {
                 }}
                 asChild
               >
-                <Link to="/register">{t('button.register')}</Link>
+                <Link to="/register">{t("button.register")}</Link>
               </Button>
             </div>
           </div>

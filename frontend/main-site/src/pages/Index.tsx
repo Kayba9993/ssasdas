@@ -7,6 +7,7 @@ import Testimonials from "@/components/home/Testimonials";
 import NavBar from "@/components/common/NavBar";
 import Footer from "@/components/common/Footer";
 import Teachers from "@/components/home/Teachers";
+import WhatsAppFloatButton from "@/components/home/FloatButtonWhatsapp";
 
 const Index = () => {
   const { t } = useLanguage();
@@ -24,6 +25,7 @@ const Index = () => {
       <Teachers />
       <Testimonials />
       <Footer />
+      
     </div>
   );
 };

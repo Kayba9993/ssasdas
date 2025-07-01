@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class NewUserRegistered extends Mailable implements ShouldQueue
+class NewUserRegistered extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -21,7 +21,7 @@ class NewUserRegistered extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            to: [config('mail.admin_email', env('ADMIN_EMAIL'))],
+            to:[config('mail.admin_email', env('ADMIN_EMAIL'))],
             subject: '🔔 New User Registration - ' . $this->user->name,
         );
     }
@@ -36,6 +36,6 @@ class NewUserRegistered extends Mailable implements ShouldQueue
         );
     }
     public function build(){
-        return $this->from('info@learnaccademy.com')->to('hikatsukayba@gmail.com');  
+        return $this->from('info@learnaccademy.com');
     }
 }
