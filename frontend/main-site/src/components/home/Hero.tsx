@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
+import heroIamge from '@/assets/images/ChatGPT Image May 11, 2025, 02_41_30 PM.png'
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ const Hero = () => {
             }`}
           >
             <img
-              src="/lovable-uploads/8f1fccaa-5cce-4888-a54d-fe66266e441a.png"
+              src={heroIamge}
               alt={t("hero.imageAlt") || "Language Course"}
               className="rounded-lg shadow-xl w-full h-auto max-w-md mx-auto"
             />
