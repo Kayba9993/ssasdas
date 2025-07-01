@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -11,17 +10,17 @@ import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { sendWhatsAppMessage } from "@/services/whatsappService";
 
-const formSchema = z.object({
-  name: z.string().min(3, { message: "الاسم مطلوب ويجب أن يكون 3 أحرف على الأقل" }),
-  message: z.string().min(10, { message: "الرسالة مطلوبة ويجب أن تكون 10 أحرف على الأقل" }),
-});
-
-type FormValues = z.infer<typeof formSchema>;
-
 const WhatsAppForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const { t, dir } = useLanguage();
+  
+  const formSchema = z.object({
+    name: z.string().min(3, { message: t("form.fullName") + " " + t("notifications.error") }),
+    message: z.string().min(10, { message: t("whatsapp.form.message") + " " + t("notifications.error") }),
+  });
+
+  type FormValues = z.infer<typeof formSchema>;
   
   const {
     register,
@@ -42,19 +41,19 @@ const WhatsAppForm = () => {
   const onSubmit = (data: FormValues) => {
     setIsSubmitting(true);
     try {
-      const message = `مرحباً، اسمي ${data.name}. ${data.message}`;
+      const message = `${t("whatsapp.float.greeting")} ${data.name}. ${data.message}`;
       sendWhatsAppMessage(whatsappNumber, message);
       
       toast({
-        title: "تم إرسال الرسالة",
-        description: "ستفتح نافذة الواتساب الآن",
+        title: t("status.success"),
+        description: t("whatsapp.form.hint"),
       });
       
       reset();
     } catch (error) {
       toast({
-        title: "خطأ في الإرسال",
-        description: "يرجى المحاولة مرة أخرى",
+        title: t("notifications.error"),
+        description: t("notifications.tryAgain"),
         variant: "destructive",
       });
     } finally {
@@ -65,12 +64,12 @@ const WhatsAppForm = () => {
   return (
     <Card className="w-full max-w-md mx-auto" dir={dir}>
       <CardHeader>
-        <CardTitle className="rtl text-2xl font-bold text-center">
+        <CardTitle className={`text-2xl font-bold text-center ${dir === 'rtl' ? 'text-right' : 'text-left'}`}>
           {t('whatsapp.form.title')}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 rtl">
+        <form onSubmit={handleSubmit(onSubmit)} className={`space-y-6 ${dir === 'rtl' ? 'text-right' : 'text-left'}`}>
           <div className="space-y-2">
             <label htmlFor="name" className="block text-sm font-medium">
               {t('whatsapp.form.name')}

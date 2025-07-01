@@ -23,7 +23,6 @@ const TeacherDetailPage = () => {
     queryFn: () => fetchUserById(id!),
     enabled: !!id,
   });
-  console.log(teacherData)
 
   useEffect(() => {
     const title = teacherData?.data
@@ -82,9 +81,9 @@ const TeacherDetailPage = () => {
         <Button
           variant="ghost"
           onClick={() => navigate("/professors")}
-          className="mb-6 flex gap-2"
+          className={`mb-6 flex gap-2 ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}
         >
-          <ArrowRight size={16} />
+          <ArrowRight size={16} className={dir === 'rtl' ? 'rotate-180' : ''} />
           {t("professors.backToList")}
         </Button>
 
@@ -101,55 +100,57 @@ const TeacherDetailPage = () => {
             <CardContent className="p-6">
               <h1 className="text-3xl font-bold mb-2 text-center">{teacher.name}</h1>
               <p className="text-xl text-academy-green mb-4 text-center">
-                {teacher.teacher?.department || "مدرس لغات"}
+                {teacher.teacher?.department || t("teacher.defaultBio")}
               </p>
 
               {/* Teacher Info Grid */}
               <div className="grid grid-cols-1 gap-4 mb-6">
                 {teacher.teacher?.specializations && (
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                  <div className={`flex items-center gap-3 p-3 bg-gray-50 rounded-lg ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}>
                     <GraduationCap className="h-5 w-5 text-academy-green" />
-                    <div>
-                      <p className="font-semibold text-sm text-gray-600">التخصصات</p>
+                    <div className={dir === 'rtl' ? 'text-right' : 'text-left'}>
+                      <p className="font-semibold text-sm text-gray-600">{t("teacher.specializations")}</p>
                       <p className="text-gray-800">{teacher.teacher.specializations.join(", ")}</p>
                     </div>
                   </div>
                 )}
 
                 {teacher.teacher?.qualification && (
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                  <div className={`flex items-center gap-3 p-3 bg-gray-50 rounded-lg ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}>
                     <Award className="h-5 w-5 text-academy-green" />
-                    <div>
-                      <p className="font-semibold text-sm text-gray-600">المؤهل العلمي</p>
+                    <div className={dir === 'rtl' ? 'text-right' : 'text-left'}>
+                      <p className="font-semibold text-sm text-gray-600">{t("teacher.qualification")}</p>
                       <p className="text-gray-800">{teacher.teacher.qualification}</p>
                     </div>
                   </div>
                 )}
 
                 {teacher.teacher?.years_experience && (
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                  <div className={`flex items-center gap-3 p-3 bg-gray-50 rounded-lg ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}>
                     <Clock className="h-5 w-5 text-academy-green" />
-                    <div>
-                      <p className="font-semibold text-sm text-gray-600">سنوات الخبرة</p>
-                      <p className="text-gray-800">{teacher.teacher.years_experience} سنة</p>
+                    <div className={dir === 'rtl' ? 'text-right' : 'text-left'}>
+                      <p className="font-semibold text-sm text-gray-600">{t("teacher.experience")}</p>
+                      <p className="text-gray-800">
+                        {t("teacher.experienceYears").replace("{years}", teacher.teacher.years_experience.toString())}
+                      </p>
                     </div>
                   </div>
                 )}
 
                 {teacher.teacher?.phone && (
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                  <div className={`flex items-center gap-3 p-3 bg-gray-50 rounded-lg ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}>
                     <Phone className="h-5 w-5 text-academy-green" />
-                    <div>
-                      <p className="font-semibold text-sm text-gray-600">الهاتف</p>
+                    <div className={dir === 'rtl' ? 'text-right' : 'text-left'}>
+                      <p className="font-semibold text-sm text-gray-600">{t("contact.phone")}</p>
                       <p className="text-gray-800">{teacher.teacher.phone}</p>
                     </div>
                   </div>
                 )}
 
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div className={`flex items-center gap-3 p-3 bg-gray-50 rounded-lg ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}>
                   <Mail className="h-5 w-5 text-academy-green" />
-                  <div>
-                    <p className="font-semibold text-sm text-gray-600">البريد الإلكتروني</p>
+                  <div className={dir === 'rtl' ? 'text-right' : 'text-left'}>
+                    <p className="font-semibold text-sm text-gray-600">{t("contact.email")}</p>
                     <p className="text-gray-800">{teacher.email}</p>
                   </div>
                 </div>
@@ -158,8 +159,10 @@ const TeacherDetailPage = () => {
               {/* Bio Section */}
               {teacher.teacher?.bio && (
                 <div className="border-t border-b py-4 my-4">
-                  <h3 className="font-semibold mb-2">نبذة عن المدرس</h3>
-                  <p className="text-gray-700 leading-relaxed">
+                  <h3 className={`font-semibold mb-2 ${dir === 'rtl' ? 'text-right' : 'text-left'}`}>
+                    {t("teacher.bio")}
+                  </h3>
+                  <p className={`text-gray-700 leading-relaxed ${dir === 'rtl' ? 'text-right' : 'text-left'}`}>
                     {teacher.teacher.bio}
                   </p>
                 </div>
@@ -177,7 +180,7 @@ const TeacherDetailPage = () => {
                 <Button
                   variant="outline"
                   onClick={() => navigate("/whatsapp")}
-                  className="w-full border-academy-green text-academy-green hover:bg-academy-green hover:text-white flex gap-2 items-center justify-center"
+                  className={`w-full border-academy-green text-academy-green hover:bg-academy-green hover:text-white flex gap-2 items-center justify-center ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}
                 >
                   <SendIcon size={16} />
                   {t("professors.contactViaWhatsApp")}

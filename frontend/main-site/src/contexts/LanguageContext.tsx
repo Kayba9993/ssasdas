@@ -524,6 +524,42 @@ const translations: Translations = {
     en: "WhatsApp will open automatically after clicking the button",
     es: "WhatsApp se abrirá automáticamente después de hacer clic en el botón",
   },
+  // WhatsApp Float Button
+  "whatsapp.float.title": {
+    ar: "تحدث معنا",
+    en: "Chat with us",
+    es: "Chatea con nosotros",
+  },
+  "whatsapp.float.subtitle": {
+    ar: "نحن هنا للمساعدة!",
+    en: "We're here to help!",
+    es: "¡Estamos aquí para ayudar!",
+  },
+  "whatsapp.float.greeting": {
+    ar: "مرحباً! 👋 كيف يمكننا مساعدتك اليوم؟",
+    en: "Hi there! 👋 How can we help you today?",
+    es: "¡Hola! 👋 ¿Cómo podemos ayudarte hoy?",
+  },
+  "whatsapp.float.replyTime": {
+    ar: "عادة ما نرد فوراً",
+    en: "Typically replies instantly",
+    es: "Normalmente responde al instante",
+  },
+  "whatsapp.float.startChat": {
+    ar: "بدء المحادثة",
+    en: "Start Chat",
+    es: "Iniciar Chat",
+  },
+  "whatsapp.float.clickToChat": {
+    ar: "اضغط للدردشة على الواتساب",
+    en: "Click to chat on WhatsApp",
+    es: "Haz clic para chatear en WhatsApp",
+  },
+  "whatsapp.float.tooltip": {
+    ar: "تحدث معنا على الواتساب",
+    en: "Chat with us on WhatsApp",
+    es: "Chatea con nosotros en WhatsApp",
+  },
   // Error/NotFound Page
   "404.title": {
     ar: "404",
@@ -654,6 +690,83 @@ const translations: Translations = {
     ar: "سنة",
     en: "Year",
     es: "Año",
+  },
+  // Admin Login Page
+  "admin.login.title": {
+    ar: "تسجيل الدخول للوحة التحكم",
+    en: "Admin Panel Login",
+    es: "Inicio de Sesión del Panel de Administración",
+  },
+  "admin.login.email": {
+    ar: "البريد الإلكتروني",
+    en: "Email",
+    es: "Correo Electrónico",
+  },
+  "admin.login.password": {
+    ar: "كلمة المرور",
+    en: "Password",
+    es: "Contraseña",
+  },
+  "admin.login.emailPlaceholder": {
+    ar: "أدخل البريد الإلكتروني",
+    en: "Enter email address",
+    es: "Ingrese dirección de correo electrónico",
+  },
+  "admin.login.passwordPlaceholder": {
+    ar: "أدخل كلمة المرور",
+    en: "Enter password",
+    es: "Ingrese contraseña",
+  },
+  "admin.login.button": {
+    ar: "تسجيل الدخول",
+    en: "Login",
+    es: "Iniciar Sesión",
+  },
+  "admin.login.loading": {
+    ar: "جاري تسجيل الدخول...",
+    en: "Logging in...",
+    es: "Iniciando sesión...",
+  },
+  "admin.login.demo": {
+    ar: "لتسجيل الدخول التجريبي: admin@example.com / admin123",
+    en: "For demo login: admin@example.com / admin123",
+    es: "Para inicio de sesión de demostración: admin@example.com / admin123",
+  },
+  // Teacher Detail Page
+  "teacher.specializations": {
+    ar: "التخصصات",
+    en: "Specializations",
+    es: "Especializaciones",
+  },
+  "teacher.qualification": {
+    ar: "المؤهل العلمي",
+    en: "Qualification",
+    es: "Cualificación",
+  },
+  "teacher.experience": {
+    ar: "سنوات الخبرة",
+    en: "Years of Experience",
+    es: "Años de Experiencia",
+  },
+  "teacher.experienceYears": {
+    ar: "{years} سنة",
+    en: "{years} years",
+    es: "{years} años",
+  },
+  "teacher.bio": {
+    ar: "نبذة عن المدرس",
+    en: "About the Teacher",
+    es: "Acerca del Profesor",
+  },
+  "teacher.defaultBio": {
+    ar: "مدرس متخصص في تدريس اللغات",
+    en: "Specialized language teacher",
+    es: "Profesor especializado en idiomas",
+  },
+  "teacher.defaultExperience": {
+    ar: "خبرة واسعة في التدريس",
+    en: "Extensive teaching experience",
+    es: "Amplia experiencia docente",
   },
 };
 
