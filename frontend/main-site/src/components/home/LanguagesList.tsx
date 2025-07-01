@@ -44,20 +44,17 @@ const LanguagesList = () => {
     return (
       <div className="py-16 bg-gray-50">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-red-500 mb-4">Failed to load languages</p>
-          <Button onClick={() => window.location.reload()}>Retry</Button>
+          <p className="text-red-500 mb-4">{t("error.general")}</p>
+          <Button onClick={() => window.location.reload()}>{t("error.retry")}</Button>
         </div>
       </div>
     );
   }
-  console.log(languages)
 
   return (
     <div className="py-16 bg-gray-50" dir={dir}>
       <div className="container mx-auto px-4">
-        <h2
-          className={`text-3xl font-bold text-center mb-12 text-academy-green `}
-        >
+        <h2 className="text-3xl font-bold text-center mb-12 text-academy-green">
           {t("languages.title")}
         </h2>
 
@@ -73,14 +70,9 @@ const LanguagesList = () => {
                     {language.icon}
                   </span>
                 </div>
-                <h3
-                  className={`text-xl font-bold mb-2 ${
-                    dir === "rtl" ? "rtl" : "ltr"
-                  }`}
-                >
-                  {dir === "rtl" ? language.name : language.slug}
+                <h3 className={`text-xl font-bold mb-2 ${dir === "rtl" ? "text-right" : "text-left"}`}>
+                  {language.name}
                 </h3>
-                {/* <p className="text-gray-500 mb-4">{language.description}</p> */}
                 <Button
                   variant="outline"
                   className="w-full border-academy-green text-academy-green hover:bg-academy-green hover:text-white"

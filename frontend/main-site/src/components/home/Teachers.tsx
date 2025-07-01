@@ -44,22 +44,19 @@ const Teachers = () => {
     return (
       <div className="py-16 bg-white">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-red-500 mb-4">Failed to load teachers</p>
-          <Button onClick={() => window.location.reload()}>Retry</Button>
+          <p className="text-red-500 mb-4">{t("error.general")}</p>
+          <Button onClick={() => window.location.reload()}>{t("error.retry")}</Button>
         </div>
       </div>
     );
   }
 
   const teachers = teachersData?.data || [];
-  console.log(teachers)
 
   return (
     <div className="py-16 bg-white" dir={dir}>
       <div className="container mx-auto px-4">
-        <h2
-          className={`text-3xl font-bold text-center mb-12 text-academy-green `}
-        >
+        <h2 className="text-3xl font-bold text-center mb-12 text-academy-green">
           {t("professors.title")}
         </h2>
 
@@ -77,7 +74,7 @@ const Teachers = () => {
                 />
               </div>
               <CardContent className="p-6 text-center">
-                <h3 className={`text-xl font-bold mb-2 text-center `}>
+                <h3 className="text-xl font-bold mb-2 text-center">
                   {teacher.name}
                 </h3>
                 <p className="text-academy-green mb-2">

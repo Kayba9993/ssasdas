@@ -84,7 +84,7 @@ const translations: Translations = {
     es: "Cursos de Idiomas de Alta Calidad a Precios Razonables",
   },
   "hero.description1": {
-    ar: "نعتقد أن اختيار الدورة المناسبة لا يجب أن يكون أمرًا معقدًا..",
+    ar: "نعتقد أن اختيار الدورة المناسبة لا يجب أن يكون أمرًا معقدًا. إذا لم تكن راضيًا عن الدورة التي اخترتها.",
     en: "We believe that choosing the right course shouldn't be complicated. If you're not satisfied with your chosen course.",
     es: "Creemos que elegir el curso adecuado no debería ser complicado. Si no estás satisfecho con el curso que elegiste.",
   },
@@ -92,6 +92,11 @@ const translations: Translations = {
     ar: "ابدأ الآن تعلم لغتك المفضلة في بيئة تعليمية مريحة وبأسعار مناسبة!",
     en: "Start learning your favorite language now in a comfortable educational environment at affordable prices!",
     es: "¡Empieza a aprender tu idioma favorito ahora en un entorno educativo cómodo y a precios asequibles!",
+  },
+  "hero.imageAlt": {
+    ar: "دورة لغوية",
+    en: "Language Course",
+    es: "Curso de Idioma",
   },
   "button.meetProfessors": {
     ar: "تعرف على أساتذتنا",
@@ -150,6 +155,43 @@ const translations: Translations = {
     en: "What Our Students Say",
     es: "Lo que dicen nuestros estudiantes",
   },
+  // Teachers/Professors Section
+  "professors.title": {
+    ar: "أساتذتنا",
+    en: "Our Professors",
+    es: "Nuestros Profesores",
+  },
+  "professors.meetButton": {
+    ar: "تعرف على الأستاذ",
+    en: "Meet the Professor",
+    es: "Conoce al Profesor",
+  },
+  "professors.viewAll": {
+    ar: "عرض جميع الأساتذة",
+    en: "View All Professors",
+    es: "Ver Todos los Profesores",
+  },
+  "professors.backToList": {
+    ar: "العودة إلى قائمة الأساتذة",
+    en: "Back to Professors List",
+    es: "Volver a la Lista de Profesores",
+  },
+  "professors.contactViaWhatsApp": {
+    ar: "تواصل مع الأستاذ عبر الواتساب",
+    en: "Contact Professor via WhatsApp",
+    es: "Contactar al Profesor por WhatsApp",
+  },
+  "professors.notFound": {
+    ar: "الأستاذ غير موجود",
+    en: "Professor not found",
+    es: "Profesor no encontrado",
+  },
+  // Teachers page (fixing the missing translation)
+  "teachers.title": {
+    ar: "أساتذتنا",
+    en: "Our Teachers",
+    es: "Nuestros Profesores",
+  },
   // Registration Page
   "register.title": {
     ar: "التسجيل في الدورات",
@@ -163,7 +205,7 @@ const translations: Translations = {
   },
   "register.paymentMethod.card": {
     ar: "تسجيل",
-    en: "ٌRegister",
+    en: "Register",
     es: "Registro",
   },
   "register.paymentMethod.bank": {
@@ -374,32 +416,6 @@ const translations: Translations = {
     en: "Inquiry",
     es: "Consulta",
   },
-  // Professors Page
-  "professors.title": {
-    ar: "أساتذتنا",
-    en: "Our Professors",
-    es: "Nuestros Profesores",
-  },
-  "professors.meetButton": {
-    ar: "تعرف على الأستاذ",
-    en: "Meet the Professor",
-    es: "Conoce al Profesor",
-  },
-  "professors.backToList": {
-    ar: "العودة إلى قائمة الأساتذة",
-    en: "Back to Professors List",
-    es: "Volver a la Lista de Profesores",
-  },
-  "professors.contactViaWhatsApp": {
-    ar: "تواصل مع الأستاذ عبر الواتساب",
-    en: "Contact Professor via WhatsApp",
-    es: "Contactar al Profesor por WhatsApp",
-  },
-  "professors.notFound": {
-    ar: "الأستاذ غير موجود",
-    en: "Professor not found",
-    es: "Profesor no encontrado",
-  },
   // Contact Page
   "contact.title": {
     ar: "تواصل معنا",
@@ -479,7 +495,7 @@ const translations: Translations = {
     es: "Puedes contactarnos fácilmente a través de WhatsApp para preguntar sobre cursos de idiomas o para registrarte en un curso específico.",
   },
   "whatsapp.form.title": {
-    ar: "تواصل معنا عبر واتسا��",
+    ar: "تواصل معنا عبر واتساب",
     en: "Contact Us via WhatsApp",
     es: "Contáctanos por WhatsApp",
   },
@@ -524,6 +540,121 @@ const translations: Translations = {
     en: "Return to Home Page",
     es: "Volver a la Página Principal",
   },
+  // Loading states
+  "loading.general": {
+    ar: "جاري التحميل...",
+    en: "Loading...",
+    es: "Cargando...",
+  },
+  "loading.teachers": {
+    ar: "جاري تحميل المدرسين...",
+    en: "Loading teachers...",
+    es: "Cargando profesores...",
+  },
+  "loading.languages": {
+    ar: "جاري تحميل اللغات...",
+    en: "Loading languages...",
+    es: "Cargando idiomas...",
+  },
+  // Error states
+  "error.general": {
+    ar: "حدث خطأ في التحميل",
+    en: "Loading error occurred",
+    es: "Ocurrió un error de carga",
+  },
+  "error.retry": {
+    ar: "إعادة المحاولة",
+    en: "Retry",
+    es: "Reintentar",
+  },
+  // Common actions
+  "action.viewMore": {
+    ar: "عرض المزيد",
+    en: "View More",
+    es: "Ver Más",
+  },
+  "action.viewLess": {
+    ar: "عرض أقل",
+    en: "View Less",
+    es: "Ver Menos",
+  },
+  "action.close": {
+    ar: "إغلاق",
+    en: "Close",
+    es: "Cerrar",
+  },
+  "action.save": {
+    ar: "حفظ",
+    en: "Save",
+    es: "Guardar",
+  },
+  "action.edit": {
+    ar: "تعديل",
+    en: "Edit",
+    es: "Editar",
+  },
+  "action.delete": {
+    ar: "حذف",
+    en: "Delete",
+    es: "Eliminar",
+  },
+  "action.confirm": {
+    ar: "تأكيد",
+    en: "Confirm",
+    es: "Confirmar",
+  },
+  // Status messages
+  "status.success": {
+    ar: "تم بنجاح",
+    en: "Success",
+    es: "Éxito",
+  },
+  "status.failed": {
+    ar: "فشل",
+    en: "Failed",
+    es: "Falló",
+  },
+  "status.pending": {
+    ar: "في الانتظار",
+    en: "Pending",
+    es: "Pendiente",
+  },
+  "status.completed": {
+    ar: "مكتمل",
+    en: "Completed",
+    es: "Completado",
+  },
+  // Time and dates
+  "time.today": {
+    ar: "اليوم",
+    en: "Today",
+    es: "Hoy",
+  },
+  "time.yesterday": {
+    ar: "أمس",
+    en: "Yesterday",
+    es: "Ayer",
+  },
+  "time.tomorrow": {
+    ar: "غداً",
+    en: "Tomorrow",
+    es: "Mañana",
+  },
+  "time.week": {
+    ar: "أسبوع",
+    en: "Week",
+    es: "Semana",
+  },
+  "time.month": {
+    ar: "شهر",
+    en: "Month",
+    es: "Mes",
+  },
+  "time.year": {
+    ar: "سنة",
+    en: "Year",
+    es: "Año",
+  },
 };
 
 interface LanguageContextType {
@@ -536,7 +667,16 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<SupportedLanguage>('ar');
+  const [language, setLanguage] = useState<SupportedLanguage>(() => {
+    // Get language from localStorage or default to Arabic
+    const savedLanguage = localStorage.getItem('language') as SupportedLanguage;
+    return savedLanguage && ['ar', 'en', 'es'].includes(savedLanguage) ? savedLanguage : 'ar';
+  });
+
+  // Save language to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem('language', language);
+  }, [language]);
 
   // Translation function
   const t = (key: string): string => {
@@ -544,7 +684,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
       console.warn(`Translation key not found: ${key}`);
       return key;
     }
-    return translations[key][language] || key;
+    return translations[key][language] || translations[key]['ar'] || key;
   };
 
   // Determine text direction based on language

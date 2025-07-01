@@ -13,7 +13,7 @@ const TeachersPage = () => {
   const { t, dir } = useLanguage();
 
   useEffect(() => {
-    document.title = `${t("teachers.title")} - أكاديمية اللغات`;
+    document.title = `${t("professors.title")} - أكاديمية اللغات`;
   }, [t]);
 
   const {
@@ -30,8 +30,8 @@ const TeachersPage = () => {
       <div>
         <NavBar />
         <div className="container mx-auto px-4 py-12" dir={dir}>
-          <h1 className="text-3xl font-bold text-center mb-12 rtl">
-            {t("teachers.title")}
+          <h1 className="text-3xl font-bold text-center mb-12">
+            {t("loading.teachers")}
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -56,9 +56,9 @@ const TeachersPage = () => {
       <div>
         <NavBar />
         <div className="container mx-auto px-4 py-12 text-center" dir={dir}>
-          <h1 className="text-3xl font-bold mb-6 rtl">{t("teachers.title")}</h1>
-          <p className="text-red-500 mb-4">Failed to load teachers</p>
-          <Button onClick={() => window.location.reload()}>Retry</Button>
+          <h1 className="text-3xl font-bold mb-6">{t("professors.title")}</h1>
+          <p className="text-red-500 mb-4">{t("error.general")}</p>
+          <Button onClick={() => window.location.reload()}>{t("error.retry")}</Button>
         </div>
         <Footer />
       </div>
@@ -71,7 +71,7 @@ const TeachersPage = () => {
     <div>
       <NavBar />
       <div className="container mx-auto px-4 py-12" dir={dir}>
-        <h1 className="text-3xl font-bold text-center mb-12 text-center">
+        <h1 className="text-3xl font-bold text-center mb-12">
           {t("professors.title")}
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -87,7 +87,7 @@ const TeachersPage = () => {
                   className="w-full h-full object-cover transition-transform hover:scale-105"
                 />
               </div>
-              <CardContent className="p-5 rtl">
+              <CardContent className={`p-5 ${dir === 'rtl' ? 'text-right' : 'text-left'}`}>
                 <h3 className="text-xl font-bold text-center mb-2">
                   {teacher.name}
                 </h3>
