@@ -1,7 +1,24 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import { testimonials } from "@/data/testimonials";
+
+const testimonials = [
+  {
+    id: "1",
+    name: "أحمد محمد",
+    text: "تجربة رائعة في تعلم اللغة الإنجليزية. الأساتذة محترفون والمنهج ممتاز."
+  },
+  {
+    id: "2", 
+    name: "فاطمة علي",
+    text: "استطعت تحسين مستواي في اللغة الفرنسية بشكل كبير خلال فترة قصيرة."
+  },
+  {
+    id: "3",
+    name: "محمد حسن", 
+    text: "الدورات مرنة والأسعار معقولة. أنصح بها بشدة."
+  }
+];
 
 const Testimonials = () => {
   const { t, dir } = useLanguage();
