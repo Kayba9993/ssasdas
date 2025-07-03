@@ -149,6 +149,52 @@ const translations: Translations = {
     en: "Try it out with no commitment and see how it works.",
     es: "Empieza sin compromiso y conoce nuestro método.",
   },
+  // FAQ / Q&A Section
+  "faq.title": {
+    ar: "الأسئلة الشائعة",
+    en: "Frequently Asked Questions",
+    es: "Preguntas Frecuentes",
+  },
+  "faq.q1": {
+    ar: "هل أستطيع تجربة الدروس قبل الاشتراك؟",
+    en: "Can I try the lessons before subscribing?",
+    es: "¿Puedo probar las clases antes de suscribirme?",
+  },
+  "faq.a1": {
+    ar: "نعم، نقدم حصة تجريبية مجانية لتتعرف على أسلوبنا التعليمي قبل اتخاذ القرار.",
+    en: "Yes, we offer a free trial class so you can experience our teaching method before committing.",
+    es: "Sí, ofrecemos una clase de prueba gratuita para que conozcas nuestro método antes de decidirte.",
+  },
+  "faq.q2": {
+    ar: "ما هي اللغات التي يمكنني تعلمها؟",
+    en: "Which languages can I learn?",
+    es: "¿Qué idiomas puedo aprender?",
+  },
+  "faq.a2": {
+    ar: "حاليًا نوفر دورات في اللغة الإنجليزية والإسبانية.",
+    en: "Currently, we offer courses in English and Spanish.",
+    es: "Actualmente, ofrecemos cursos de inglés y español.",
+  },
+  "faq.q3": {
+    ar: "هل الدروس مباشرة أم مسجلة؟",
+    en: "Are the lessons live or recorded?",
+    es: "¿Las clases son en vivo o grabadas?",
+  },
+  "faq.a3": {
+    ar: "جميع الدروس مباشرة وتفاعلية مع المعلم.",
+    en: "All lessons are live and interactive with the teacher.",
+    es: "Todas las clases son en vivo e interactivas con el profesor.",
+  },
+  "faq.q4": {
+    ar: "كيف يمكنني الدفع مقابل الدورات؟",
+    en: "How can I pay for the courses?",
+    es: "¿Cómo puedo pagar los cursos?",
+  },
+  "faq.a4": {
+    ar: "نوفر خيارات دفع متعددة مثل البطاقة البنكية والتحويل البنكي.",
+    en: "We offer multiple payment options such as credit card and bank transfer.",
+    es: "Ofrecemos varias opciones de pago como tarjeta de crédito y transferencia bancaria.",
+  },
   // Testimonials Section
   "testimonials.title": {
     ar: "ماذا يقول طلابنا",
