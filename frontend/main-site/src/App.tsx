@@ -15,6 +15,11 @@ import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import AdminLoginPage from "./pages/AdminLoginPage";
 
+// Language Landing Pages
+import EnglishLandingPage from "./pages/EnglishLandingPage";
+import SpanishLandingPage from "./pages/SpanishLandingPage";
+import ArabicLandingPage from "./pages/ArabicLandingPage";
+
 // Admin pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import QuizManagement from "./pages/admin/QuizManagement";
@@ -43,6 +48,12 @@ const App = () => (
             <Route path="/register" element={<RegistrationPage />} />
             <Route path="/whatsapp" element={<WhatsAppPage />} />
             <Route path="/contact" element={<ContactPage />} />
+
+            {/* Language Landing Pages */}
+            <Route path="/english" element={<EnglishLandingPage />} />
+            <Route path="/spanish" element={<SpanishLandingPage />} />
+            <Route path="/espanol" element={<SpanishLandingPage />} />
+            <Route path="/arabic" element={<ArabicLandingPage />} />
 
             {/* Admin login route */}
             <Route path="/admin/login" element={<AdminLoginPage />} />

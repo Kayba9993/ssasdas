@@ -51,6 +51,13 @@ const LanguagesList = () => {
     );
   }
 
+  const getLanguagePath = (language: any) => {
+    const slug = language.slug.toLowerCase();
+    if (slug === 'english') return '/english';
+    if (slug === 'spanish') return '/spanish';
+    return '/arabic'; // Default to Arabic landing page
+  };
+
   return (
     <div className="py-16 bg-gray-50" dir={dir}>
       <div className="container mx-auto px-4">
@@ -73,13 +80,21 @@ const LanguagesList = () => {
                 <h3 className={`text-xl font-bold mb-2 ${dir === "rtl" ? "text-right" : "text-left"}`}>
                   {dir == "rtl"?language.name:language.slug}
                 </h3>
-                <Button
-                  variant="outline"
-                  className="w-full border-academy-green text-academy-green hover:bg-academy-green hover:text-white"
-                  onClick={() => navigate("/register")}
-                >
-                  {t("button.register")}
-                </Button>
+                <div className="flex flex-col gap-2">
+                  <Button
+                    className="w-full bg-academy-green hover:bg-academy-green/90"
+                    onClick={() => navigate(getLanguagePath(language))}
+                  >
+                    {dir === "rtl" ? "تعرف على المزيد" : "Learn More"}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full border-academy-green text-academy-green hover:bg-academy-green hover:text-white"
+                    onClick={() => navigate("/register")}
+                  >
+                    {t("button.register")}
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           ))}
