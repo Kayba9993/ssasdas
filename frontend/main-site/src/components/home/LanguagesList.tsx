@@ -71,7 +71,7 @@ const LanguagesList = () => {
                   </span>
                 </div>
                 <h3 className={`text-xl font-bold mb-2 ${dir === "rtl" ? "text-right" : "text-left"}`}>
-                  {language.name}
+                  {dir == "rtl"?language.name:language.slug}
                 </h3>
                 <Button
                   variant="outline"

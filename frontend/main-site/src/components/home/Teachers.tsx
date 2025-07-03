@@ -45,7 +45,9 @@ const Teachers = () => {
       <div className="py-16 bg-white">
         <div className="container mx-auto px-4 text-center">
           <p className="text-red-500 mb-4">{t("error.general")}</p>
-          <Button onClick={() => window.location.reload()}>{t("error.retry")}</Button>
+          <Button onClick={() => window.location.reload()}>
+            {t("error.retry")}
+          </Button>
         </div>
       </div>
     );
@@ -84,11 +86,7 @@ const Teachers = () => {
                   {teacher.teacher?.specializations?.join(", ") ||
                     "متخصص في تدريس اللغات"}
                 </p>
-                <p className="text-gray-500 text-xs mb-4">
-                  {teacher.teacher?.years_experience
-                    ? `${teacher.teacher.years_experience} سنوات خبرة`
-                    : "خبرة واسعة في التدريس"}
-                </p>
+                
                 <Button
                   variant="outline"
                   className="w-full border-academy-green text-academy-green hover:bg-academy-green hover:text-white"

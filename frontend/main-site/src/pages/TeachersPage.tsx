@@ -87,7 +87,9 @@ const TeachersPage = () => {
                   className="w-full h-full object-cover transition-transform hover:scale-105"
                 />
               </div>
-              <CardContent className={`p-5 ${dir === 'rtl' ? 'text-right' : 'text-left'}`}>
+              <CardContent
+                className={`p-5 ${dir === "rtl" ? "text-right" : "text-left"}`}
+              >
                 <h3 className="text-xl font-bold text-center mb-2">
                   {teacher.name}
                 </h3>
@@ -98,11 +100,7 @@ const TeachersPage = () => {
                   {teacher.teacher?.specializations?.join(", ") ||
                     "متخصص في تدريس اللغات"}
                 </p>
-                <p className="text-gray-500 text-center text-xs mb-4">
-                  {teacher.teacher?.years_experience
-                    ? `${teacher.teacher.years_experience} سنوات خبرة`
-                    : "خبرة واسعة في التدريس"}
-                </p>
+                
                 <Button
                   onClick={() => navigate(`/professors/${teacher.id}`)}
                   className="w-full bg-academy-green hover:bg-opacity-90"
