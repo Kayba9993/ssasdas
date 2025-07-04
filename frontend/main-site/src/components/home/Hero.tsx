@@ -34,13 +34,20 @@ const Hero = () => {
             >
               {t("hero.description1")}
             </p>
-            <p
+            <div
               className={`text-lg md:text-xl mb-8 text-gray-700 leading-relaxed ${
                 dir === "rtl" ? "font-arabic" : ""
               }`}
             >
               {t("hero.description2")}
-            </p>
+            </div>
+            <div
+              className={`text-lg md:text-xl mb-8 text-gray-700 leading-relaxed ${
+                dir === "rtl" ? "font-arabic" : ""
+              }`}
+            >
+              {t("hero.description3")}
+            </div>    
 
             {/* Fixed button alignment and spacing */}
             <div

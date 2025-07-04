@@ -23,6 +23,7 @@ import QuizQuestions from "./pages/admin/QuizQuestions";
 import StudentsManagement from "./pages/admin/StudentsManagement";
 
 import WhatsAppFloatButton from "./components/home/FloatButtonWhatsapp";
+import EnglishLandingPage from "./pages/landingEngPAge";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/professors" element={<TeachersPage />} />
             <Route path="/professors/:id" element={<TeacherDetailPage />} />
             <Route path="/languages" element={<LanguagesPage />} />
+            <Route path="/languages/english" element={<EnglishLandingPage />} />
             <Route path="/register" element={<RegistrationPage />} />
             <Route path="/whatsapp" element={<WhatsAppPage />} />
             <Route path="/contact" element={<ContactPage />} />
@@ -51,7 +53,10 @@ const App = () => (
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/quizzes" element={<QuizManagement />} />
             <Route path="/admin/quizzes/create" element={<CreateQuiz />} />
-            <Route path="/admin/quizzes/:quizId/questions" element={<QuizQuestions />} />
+            <Route
+              path="/admin/quizzes/:quizId/questions"
+              element={<QuizQuestions />}
+            />
             <Route path="/admin/students" element={<StudentsManagement />} />
 
             {/* 404 route */}

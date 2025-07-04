@@ -11,6 +11,16 @@ type Translations = {
 
 // Initial translation data
 const translations: Translations = {
+  "logo.name": {
+    ar: "أكاديمية اللغات",
+    en: "Learn Academy",
+    es: "Learn Academy",
+  },
+  "logo.tagline": {
+    ar: "تعلم اللغة، غير حياتك",
+    en: "Learn the Language, Change Your Life.",
+    es: "Domina el idioma y transforma tu futuro.",
+  },
   // Common UI elements
   "nav.home": {
     ar: "الرئيسية",
@@ -89,9 +99,14 @@ const translations: Translations = {
     es: "Tu primer paso hacia dominar un idioma extranjero empieza aquí.",
   },
   "hero.description2": {
-    ar: "تعلّم الإنجليزية أو الإسبانية من خلال دروس مباشرة وتفاعلية، مصممة خصيصًا لك.",
-    en: "Learn English or Spanish through live, interactive lessons tailored just for you.",
-    es: "Aprende inglés o español con clases en vivo e interactivas diseñadas especialmente para ti.",
+    ar: "هل تطمح لتعلم اللغة الإنجليزية أو الإسبانية؟\nهل ترغب في تطوير مهاراتك اللغوية لأغراض مهنية، دراسية أو شخصية؟\n.",
+    en: "Do you aspire to learn English or Spanish?\nDo you want to improve your language skills for professional, academic, or personal purposes?",
+    es: "¿Aspiras a aprender inglés o español?\n¿Quieres mejorar tus habilidades lingüísticas con fines profesionales, académicos o personales?",
+  },
+  "hero.description3": {
+    ar: "في Learn Accademy، نقدم لكم تجربة تعليمية مباشرة، فعالة ومصممة خصيصًا لتناسب احتياجاتكم.",
+    en: "At Learn Accademy, we offer a live, effective, and tailored learning experience to meet your needs.",
+    es: "En Learn Accademy, te ofrecemos una experiencia educativa en vivo, eficaz y personalizada para adaptarse a tus necesidades.",
   },
   "hero.imageAlt": {
     ar: "تعلم اللغات مع Learn Accademy",
@@ -778,6 +793,106 @@ const translations: Translations = {
     en: "For demo login: admin@example.com / admin123",
     es: "Para inicio de sesión de demostración: admin@example.com / admin123",
   },
+  "hero.titlet": {
+    ar: "تحدث الإنجليزية بثقة",
+    en: "Speak English with confidence",
+    es: "Habla inglés con confianza",
+  },
+  "hero.subtitle": {
+    ar: "ابتداءً من فصلك الأول",
+    en: "Starting from your very first class",
+    es: "Comenzando desde tu primera clase",
+  },
+  "hero.description": {
+    ar: "في Learn Academy، نساعدك على التحدث بالإنجليزية في محادثات حقيقية، وليس مجرد حفظ القواعد.",
+    en: "At Learn Academy, we help you speak English in real conversations, not just memorize grammar.",
+    es: "En Learn Academy, te ayudamos a hablar inglés en conversaciones reales, no solo memorizar gramática.",
+  },
+  "hero.cta": {
+    ar: "ابدأ فصلي المجاني",
+    en: "Start My Free Class",
+    es: "Comenzar Mi Clase Gratuita",
+  },
+  "features.title": {
+    ar: "ما تحصل عليه:",
+    en: "What you get:",
+    es: "Lo que obtienes:",
+  },
+  "features.teachers": {
+    ar: "دروس مباشرة مع مدرسين معتمدين يتحدثون الإنجليزية",
+    en: "Live lessons with certified English-speaking teachers",
+    es: "Clases en vivo con profesores certificados de habla inglesa",
+  },
+  "features.method": {
+    ar: "طريقة عملية تركز على التحدث والاستماع",
+    en: "Practical method focused on speaking & listening",
+    es: "Método práctico enfocado en hablar y escuchar",
+  },
+  "features.schedules": {
+    ar: "جدول مرن – تعلم في أي وقت، في أي مكان",
+    en: "Flexible schedule – learn anytime, anywhere",
+    es: "Horario flexible – aprende en cualquier momento, en cualquier lugar",
+  },
+  "features.trial": {
+    ar: "الفصل الأول مجاناً – بدون التزام!",
+    en: "First class FREE – no commitment!",
+    es: "¡Primera clase GRATIS – sin compromiso!",
+  },
+  "why.title": {
+    ar: "لماذا تختار Learn Accademy؟",
+    en: "Why choose Learn Academy?",
+    es: "¿Por qué elegir Learn Academy?",
+  },
+  "why.subtitle": {
+    ar: "لأنك تستحق أن:",
+    en: "Because you deserve to:",
+    es: "Porque mereces:",
+  },
+  "why.interviews": {
+    ar: "كن واثقاً في المقابلات والاجتماعات",
+    en: "Be confident in interviews and meetings",
+    es: "Ser confiado en entrevistas y reuniones",
+  },
+  "why.travel": {
+    ar: "سافر وتحدث بدون خوف",
+    en: "Travel and speak without fear",
+    es: "Viajar y hablar sin miedo",
+  },
+  "why.opportunities": {
+    ar: "ادرس وانمِ فرصك",
+    en: "Study and grow your opportunities",
+    es: "Estudiar y hacer crecer tus oportunidades",
+  },
+  "why.speak": {
+    ar: "وأخيراً تحدث الإنجليزية، وليس مجرد دراستها",
+    en: "And finally speak English, not just study it",
+    es: "Y finalmente hablar inglés, no solo estudiarlo",
+  },
+  "testimonials.titlet": {
+    ar: "آلاف المتعلمين يثقون بالفعل في Learn Academy",
+    en: "Thousands of learners already trust Learn Academy",
+    es: "Miles de estudiantes ya confían en Learn Academy",
+  },
+  "cta.title": {
+    ar: "ابدأ رحلتك الآن",
+    en: "Start your journey now",
+    es: "Comienza tu viaje ahora",
+  },
+  "cta.subtitle": {
+    ar: "انضم اليوم واحصل على فصل تجريبي مجاني.",
+    en: "Join today and get your free trial class.",
+    es: "Únete hoy y obtén tu clase de prueba gratuita.",
+  },
+  "footer.support": {
+    ar: "تحتاج مساعدة؟ فريق الدعم متاح 24/7.",
+    en: "Need help? Our support team is available 24/7.",
+    es: "¿Necesitas ayuda? Nuestro equipo de soporte está disponible 24/7.",
+  },
+  "teacher.specializations": {
+    ar: "التخصصات",
+    en: "Specializations",
+    es: "Especializaciones",
+  },
   // Teacher Detail Page
   "teacher.specializations": {
     ar: "التخصصات",
@@ -785,7 +900,7 @@ const translations: Translations = {
     es: "Especializaciones",
   },
   "teacher.qualification": {
-    ar: "المؤهل العلمي",
+    ar: "التأهيل العلمي",
     en: "Qualification",
     es: "Cualificación",
   },
@@ -813,6 +928,31 @@ const translations: Translations = {
     ar: "خبرة واسعة في التدريس",
     en: "Extensive teaching experience",
     es: "Amplia experiencia docente",
+  },
+  "hero.badge": {
+    ar: "تعلم الإنجليزية بسهولة",
+    en: "English Learning Made Simple",
+    es: "Aprender inglés de manera simple",
+  },
+  "features.trial.description": {
+    ar: "جرب قبل أن تلتزم بأي شيء",
+    en: "Try before you commit to anything",
+    es: "Prueba antes de comprometerte con algo",
+  },
+  "features.schedule.description": {
+    ar: "اجعل التعلم يتناسب مع نمط حياتك المزدحم",
+    en: "Fit learning into your busy lifestyle",
+    es: "Adapta el aprendizaje a tu estilo de vida ocupado",
+  },
+  "features.method.description": {
+    ar: "محادثات حقيقية، وليس مجرد تمارين قواعد",
+    en: "Real conversations, not just grammar drills",
+    es: "Conversaciones reales, no solo ejercicios de gramática",
+  },
+  "features.teachers.description": {
+    ar: "تعلم من متحدثين أصليين ذوي خبرة",
+    en: "Learn from experienced native speakers",
+    es: "Aprende de hablantes nativos experimentados",
   },
 };
 
